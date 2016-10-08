@@ -11,7 +11,7 @@ public class Cacti {
 	public static int STATUS_NEEDRAIN = 1;
 	public static int STATUS_NEEDFERT = 2;
 	public static int STATUS_INVINCIBLE = -1;
-	public static int STATUS_DEAD = 2;
+	public static int STATUS_DEAD = -2;
 	
 	private Texture cactusImage;
 	public Array<Rectangle> cactiRectangle;
@@ -19,7 +19,7 @@ public class Cacti {
 	public int cactusHealth[];
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
-	private int cactusMaxHealth = 5;
+	public int cactusMaxHealth = 5;
 	private int counter;
 	
 	public Cacti(RaindropsGame raindropsGame, GameScreen gameScreen)
@@ -76,7 +76,7 @@ public class Cacti {
 	
 	public void hit(int target)
 	{
-		if(cactusStatus[target] != STATUS_NEEDRAIN && cactusStatus[target] != STATUS_INVINCIBLE)
+		if(cactusStatus[target] == STATUS_NORMAL || cactusStatus[target] == STATUS_NEEDFERT)
 		{
 			cactusHealth[target]--;
 			if(cactusHealth[target] <= 0)
@@ -91,5 +91,7 @@ public class Cacti {
 		cactusStatus[target] = STATUS_DEAD;
 		cactiRectangle.get(target).width = 0;
 		cactiRectangle.get(target).height = 0;
+		cactiRectangle.get(target).x = -1;
+		cactiRectangle.get(target).y = -1;
 	}
 }

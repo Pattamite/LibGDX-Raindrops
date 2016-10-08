@@ -25,6 +25,7 @@ public class GameScreen extends ScreenAdapter{
 	 private RainDrop rainDrop;
 	 private Umbrella umbrella;
 	 private Cacti cacti;
+	 private CactiHealthBar cactiHealthBar;
 	 private long lastDropTime;
 	 private int cactiCounter;
 	    
@@ -34,6 +35,7 @@ public class GameScreen extends ScreenAdapter{
 		 rainDrop = new RainDrop(this.raindropsGame, this);
 		 umbrella = new Umbrella(this.raindropsGame, this);
 		 cacti = new Cacti(this.raindropsGame, this);
+		 cactiHealthBar = new CactiHealthBar(cacti, this);
 	     //Sound
 	     	//rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
 	     	//rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
@@ -61,9 +63,8 @@ public class GameScreen extends ScreenAdapter{
 	     umbrella.draw();
 	     rainDrop.draw();
 	     cacti.draw();
-	     batch.end();
-	        
-	     
+	     cactiHealthBar.draw();
+	     batch.end();  
 	 }
 	 
 	 private void controlUmbrella()
