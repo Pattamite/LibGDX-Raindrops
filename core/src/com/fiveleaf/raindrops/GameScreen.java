@@ -18,26 +18,25 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen extends ScreenAdapter{
 	 private OrthographicCamera camera;
-	 private Texture umbrellaImage;
 	 private Texture cactusImage;
 	 private Sound rainToCactiSound;
 	 private Sound rainToUmbrellaSound;
 	 private Music raindropsMusic;
-	 private Rectangle umbrella;
-	 private int umbrellaPosition;
 	 private Array<Rectangle> cacti;
 	 public SpriteBatch batch;
 	 private RaindropsGame raindropsGame;
 	 private RainDrop rainDrop;
+	 private Umbrella umbrella;
 	 private long lastDropTime;
 	    
 	 public GameScreen(RaindropsGame raindropsGame) {
 		 this.raindropsGame = raindropsGame;
 		 this.batch = raindropsGame.batch;
 		 rainDrop = new RainDrop(this.raindropsGame, this);
+		 umbrella = new Umbrella(this.raindropsGame, this);
 		 // Texture
 	     
-	     umbrellaImage = new Texture(Gdx.files.internal("Raindrops_Umbrella.png"));
+	     
 	     cactusImage = new Texture(Gdx.files.internal("Raindrops_Cactus.png"));
 	     // Sound
 	     //rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
@@ -51,13 +50,9 @@ public class GameScreen extends ScreenAdapter{
 	     camera.setToOrtho(false, 160, 144);
 	     // SpriteBatch
 	     // Umbrella
-	     umbrella = new Rectangle();
-	     umbrella.x = (160 / 2) - (32 / 2);
-	     umbrella.y = 48 + 24;
-	     umbrella.width = 32;
-	     umbrella.height = 32;
+	    
 	     // GameLogic
-	     umbrellaPosition = 2;
+	    
 	     rainDrop.spawnRaindrop();
 	     cacti = new Array<Rectangle>();
 	     placeCacti();
@@ -72,27 +67,32 @@ public class GameScreen extends ScreenAdapter{
 	        
 	        batch.setProjectionMatrix(camera.combined);
 	        batch.begin();
-	        batch.draw(umbrellaImage, umbrella.x, umbrella.y);
-	        rainDrop.drawAll();
+	        umbrella.draw();
+	        rainDrop.draw();
 	        for(Rectangle cactus: cacti) {
 	            batch.draw(cactusImage, cactus.x, cactus.y);
 	        }
 	        batch.end();
 	        
-	        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-	            if(umbrella.getX() > 0) {
-	                umbrella.x = umbrella.getX() - 3;
+	       
+	        controlUmbrella();
+	        spawnRaindrops();
+	        checkRainDrops();
+	 }
+	 
+	 private void controlUmbrella()
+	 {
+		 if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
+	            if(umbrella.umbrellaRactangle.getX() > 0) {
+	                umbrella.umbrellaRactangle.x = umbrella.umbrellaRactangle.getX() - 3;
 	            }
 	        }
 	        
 	        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT )|| Gdx.input.isKeyPressed(Input.Keys.D)) {
-	        	if(umbrella.getX() < (160 - 32)) {
-	                umbrella.x = umbrella.getX() + 3;
+	        	if(umbrella.umbrellaRactangle.getX() < (160 - 32)) {
+	                umbrella.umbrellaRactangle.x = umbrella.umbrellaRactangle.getX() + 3;
 	            }
 	        }
-	        
-	        spawnRaindrops();
-	        checkRainDrops();
 	 }
 	 
 	 private void spawnRaindrops()
@@ -105,24 +105,24 @@ public class GameScreen extends ScreenAdapter{
 	 
 	 private void checkRainDrops()
 	 {
-		 Iterator<Rectangle> iter = rainDrop.raindrops.iterator(); 
-	     while(iter.hasNext()) {
-	         Rectangle raindrop = iter.next();
+		 Iterator<Rectangle> iterRaindrop = rainDrop.raindrops.iterator(); 
+	     while(iterRaindrop.hasNext()) {
+	         Rectangle raindrop = iterRaindrop.next();
 	         raindrop.y = raindrop.getY() - (100 * Gdx.graphics.getDeltaTime());
 	         if(raindrop.y + 16 < 0) {
-	             iter.remove();
+	             iterRaindrop.remove();
 	         }
-	         if(raindrop.overlaps(umbrella)) {
+	         if(raindrop.overlaps(umbrella.umbrellaRactangle)) {
 	             //rainToUmbrellaSound.play();
-	             iter.remove();
+	             iterRaindrop.remove();
 	         }
 	         else {
-	             Iterator<Rectangle> iter2 = cacti.iterator();
-	             while(iter2.hasNext()) {
-	                 Rectangle cactus = iter2.next();
+	             Iterator<Rectangle> iterCacti = cacti.iterator();
+	             while(iterCacti.hasNext()) {
+	                 Rectangle cactus = iterCacti.next();
 	                 if(raindrop.overlaps(cactus)) {
 	                     //rainToCactiSound.play();
-	                     iter.remove();
+	                     iterRaindrop.remove();
 	                 }
 	             }
 	         }

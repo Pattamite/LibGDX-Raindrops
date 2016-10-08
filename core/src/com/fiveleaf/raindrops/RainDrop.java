@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 
 public class RainDrop {
 	private Texture rainDropImage;
@@ -29,7 +28,7 @@ public class RainDrop {
 	     raindrop.height = 8;
 	     raindrops.add(raindrop);
 	 }
-	public void drawAll()
+	public void draw()
 	{
 		for(Rectangle raindrop: raindrops) {
             gameScreen.batch.draw(rainDropImage, raindrop.x, raindrop.y);
