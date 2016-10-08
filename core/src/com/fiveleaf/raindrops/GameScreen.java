@@ -26,6 +26,7 @@ public class GameScreen extends ScreenAdapter{
 	 private Umbrella umbrella;
 	 private Cacti cacti;
 	 private long lastDropTime;
+	 private int cactiCounter;
 	    
 	 public GameScreen(RaindropsGame raindropsGame) {
 		 this.raindropsGame = raindropsGame;
@@ -33,28 +34,16 @@ public class GameScreen extends ScreenAdapter{
 		 rainDrop = new RainDrop(this.raindropsGame, this);
 		 umbrella = new Umbrella(this.raindropsGame, this);
 		 cacti = new Cacti(this.raindropsGame, this);
-		 // Texture
-	     
-	     
-	     
-	     // Sound
-	     //rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
-	     //rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
-	     //raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("raindrops.mp3"));
-	     // Background Music
-	     //raindropsMusic.setLooping(true)
-	     //raindropsMusic.play();
-	     // Camera
+	     //Sound
+	     	//rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
+	     	//rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
+	     	//raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("raindrops.mp3"));
+	     //Background Music
+	     	//raindropsMusic.setLooping(true)
+	     	//raindropsMusic.play();
 	     camera = new OrthographicCamera();
 	     camera.setToOrtho(false, 160, 144);
-	     // SpriteBatch
-	     // Umbrella
-	    
-	     // GameLogic
-	    
 	     rainDrop.spawnRaindrop();
-	     
-	     
 	 }
 	 
 	 @Override
@@ -97,7 +86,8 @@ public class GameScreen extends ScreenAdapter{
 		 if(TimeUtils.nanoTime() - lastDropTime > 300000000) {
 	            rainDrop.spawnRaindrop();
 	            lastDropTime = TimeUtils.nanoTime();
-	        }
+	            //rainToCactiSound.play();
+	     }
 	 }
 	 
 	 private void checkRainDrops()
@@ -115,12 +105,15 @@ public class GameScreen extends ScreenAdapter{
 	         }
 	         else {
 	             Iterator<Rectangle> iterCacti = cacti.cactiRectangle.iterator();
+	             cactiCounter = 0;
 	             while(iterCacti.hasNext()) {
 	                 Rectangle cactus = iterCacti.next();
 	                 if(raindrop.overlaps(cactus)) {
 	                     //rainToCactiSound.play();
 	                     iterRaindrop.remove();
+	                     cacti.hit(cactiCounter);
 	                 }
+	                 cactiCounter++;
 	             }
 	         }
 	     }
