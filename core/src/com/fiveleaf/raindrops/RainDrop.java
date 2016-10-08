@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class RainDrop {
 	private Texture rainDropImage;
-	public Array<Rectangle> raindrops;
+	public Array<Rectangle> raindropsRactangle;
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
 	
@@ -17,7 +17,7 @@ public class RainDrop {
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
 		rainDropImage = new Texture(Gdx.files.internal("Raindrops_Rain.png"));
-		raindrops = new Array<Rectangle>();
+		raindropsRactangle = new Array<Rectangle>();
 	}
 	
 	public void spawnRaindrop() {
@@ -26,11 +26,11 @@ public class RainDrop {
 	     raindrop.y = 144;
 	     raindrop.width = 8;
 	     raindrop.height = 8;
-	     raindrops.add(raindrop);
+	     raindropsRactangle.add(raindrop);
 	 }
 	public void draw()
 	{
-		for(Rectangle raindrop: raindrops) {
+		for(Rectangle raindrop: raindropsRactangle) {
             gameScreen.batch.draw(rainDropImage, raindrop.x, raindrop.y);
         }
 	}

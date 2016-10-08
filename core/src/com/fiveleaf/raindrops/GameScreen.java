@@ -9,24 +9,22 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen extends ScreenAdapter{
 	 private OrthographicCamera camera;
-	 private Texture cactusImage;
+	 
 	 private Sound rainToCactiSound;
 	 private Sound rainToUmbrellaSound;
 	 private Music raindropsMusic;
-	 private Array<Rectangle> cacti;
+	 
 	 public SpriteBatch batch;
 	 private RaindropsGame raindropsGame;
 	 private RainDrop rainDrop;
 	 private Umbrella umbrella;
+	 private Cacti cacti;
 	 private long lastDropTime;
 	    
 	 public GameScreen(RaindropsGame raindropsGame) {
@@ -34,10 +32,11 @@ public class GameScreen extends ScreenAdapter{
 		 this.batch = raindropsGame.batch;
 		 rainDrop = new RainDrop(this.raindropsGame, this);
 		 umbrella = new Umbrella(this.raindropsGame, this);
+		 cacti = new Cacti(this.raindropsGame, this);
 		 // Texture
 	     
 	     
-	     cactusImage = new Texture(Gdx.files.internal("Raindrops_Cactus.png"));
+	     
 	     // Sound
 	     //rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
 	     //rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
@@ -54,8 +53,8 @@ public class GameScreen extends ScreenAdapter{
 	     // GameLogic
 	    
 	     rainDrop.spawnRaindrop();
-	     cacti = new Array<Rectangle>();
-	     placeCacti();
+	     
+	     
 	 }
 	 
 	 @Override
@@ -64,20 +63,18 @@ public class GameScreen extends ScreenAdapter{
 		 Gdx.gl.glClearColor(0.6055f, 0.7344f, 0.0586f, 1.0f);
 	     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		 camera.update();
+		 controlUmbrella();
+	     spawnRaindrops();
+	     checkRainDrops();
 	        
-	        batch.setProjectionMatrix(camera.combined);
-	        batch.begin();
-	        umbrella.draw();
-	        rainDrop.draw();
-	        for(Rectangle cactus: cacti) {
-	            batch.draw(cactusImage, cactus.x, cactus.y);
-	        }
-	        batch.end();
+	     batch.setProjectionMatrix(camera.combined);
+	     batch.begin();
+	     umbrella.draw();
+	     rainDrop.draw();
+	     cacti.draw();
+	     batch.end();
 	        
-	       
-	        controlUmbrella();
-	        spawnRaindrops();
-	        checkRainDrops();
+	     
 	 }
 	 
 	 private void controlUmbrella()
@@ -105,7 +102,7 @@ public class GameScreen extends ScreenAdapter{
 	 
 	 private void checkRainDrops()
 	 {
-		 Iterator<Rectangle> iterRaindrop = rainDrop.raindrops.iterator(); 
+		 Iterator<Rectangle> iterRaindrop = rainDrop.raindropsRactangle.iterator(); 
 	     while(iterRaindrop.hasNext()) {
 	         Rectangle raindrop = iterRaindrop.next();
 	         raindrop.y = raindrop.getY() - (100 * Gdx.graphics.getDeltaTime());
@@ -117,7 +114,7 @@ public class GameScreen extends ScreenAdapter{
 	             iterRaindrop.remove();
 	         }
 	         else {
-	             Iterator<Rectangle> iterCacti = cacti.iterator();
+	             Iterator<Rectangle> iterCacti = cacti.cactiRectangle.iterator();
 	             while(iterCacti.hasNext()) {
 	                 Rectangle cactus = iterCacti.next();
 	                 if(raindrop.overlaps(cactus)) {
@@ -129,24 +126,5 @@ public class GameScreen extends ScreenAdapter{
 	     }
 	 }
 	    
-	 private void placeCacti() {
-	     Rectangle cactus = new Rectangle();
-	     cactus.x = (160 / 2) - (52 + 16);
-	     cactus.y = 48 - (32 / 2);
-	     cactus.width = 32;
-	     cactus.height = 32;
-	     cacti.add(cactus);
-	     cactus = new Rectangle();
-	     cactus.x = (160 / 2) - (32 / 2);
-	     cactus.y = 48 - (32 / 2);
-	     cactus.width = 32;
-	     cactus.height = 32;
-	     cacti.add(cactus);
-	     cactus = new Rectangle();
-	     cactus.x = (160 / 2) + (52 - 16);
-	     cactus.y = 48 - (32 / 2);
-	     cactus.width = 32;
-	     cactus.height = 32;
-	     cacti.add(cactus);       
-	 }
+	 
 }
