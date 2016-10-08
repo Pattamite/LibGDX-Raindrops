@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen extends ScreenAdapter{
 	 private OrthographicCamera camera;
-	 private Texture rainDropImage;
 	 private Texture umbrellaImage;
 	 private Texture cactusImage;
 	 private Sound rainToCactiSound;
@@ -26,15 +25,18 @@ public class GameScreen extends ScreenAdapter{
 	 private Music raindropsMusic;
 	 private Rectangle umbrella;
 	 private int umbrellaPosition;
-	 private Array<Rectangle> raindrops;
 	 private Array<Rectangle> cacti;
+	 public SpriteBatch batch;
+	 private RaindropsGame raindropsGame;
+	 private RainDrop rainDrop;
 	 private long lastDropTime;
-	 private SpriteBatch batch;
 	    
 	 public GameScreen(RaindropsGame raindropsGame) {
+		 this.raindropsGame = raindropsGame;
 		 this.batch = raindropsGame.batch;
+		 rainDrop = new RainDrop(this.raindropsGame, this);
 		 // Texture
-	     rainDropImage = new Texture(Gdx.files.internal("Raindrops_Rain.png"));
+	     
 	     umbrellaImage = new Texture(Gdx.files.internal("Raindrops_Umbrella.png"));
 	     cactusImage = new Texture(Gdx.files.internal("Raindrops_Cactus.png"));
 	     // Sound
@@ -56,8 +58,7 @@ public class GameScreen extends ScreenAdapter{
 	     umbrella.height = 32;
 	     // GameLogic
 	     umbrellaPosition = 2;
-	     raindrops = new Array<Rectangle>();
-	     spawnRaindrop();
+	     rainDrop.spawnRaindrop();
 	     cacti = new Array<Rectangle>();
 	     placeCacti();
 	 }
@@ -72,9 +73,7 @@ public class GameScreen extends ScreenAdapter{
 	        batch.setProjectionMatrix(camera.combined);
 	        batch.begin();
 	        batch.draw(umbrellaImage, umbrella.x, umbrella.y);
-	        for(Rectangle raindrop: raindrops) {
-	            batch.draw(rainDropImage, raindrop.x, raindrop.y);
-	        }
+	        rainDrop.drawAll();
 	        for(Rectangle cactus: cacti) {
 	            batch.draw(cactusImage, cactus.x, cactus.y);
 	        }
@@ -91,43 +90,43 @@ public class GameScreen extends ScreenAdapter{
 	                umbrella.x = umbrella.getX() + 3;
 	            }
 	        }
-	        if(TimeUtils.nanoTime() - lastDropTime > 300000000) {
-	            spawnRaindrop();
-	        }
 	        
-	        Iterator<Rectangle> iter = raindrops.iterator();
-	        
-	        while(iter.hasNext()) {
-	            Rectangle raindrop = iter.next();
-	            raindrop.y = raindrop.getY() - (100 * Gdx.graphics.getDeltaTime());
-	            if(raindrop.y + 16 < 0) {
-	                iter.remove();
-	            }
-	            if(raindrop.overlaps(umbrella)) {
-	                //rainToUmbrellaSound.play();
-	                iter.remove();
-	            }
-	            else {
-	                Iterator<Rectangle> iter2 = cacti.iterator();
-	                while(iter2.hasNext()) {
-	                    Rectangle cactus = iter2.next();
-	                    if(raindrop.overlaps(cactus)) {
-	                        //rainToCactiSound.play();
-	                        iter.remove();
-	                    }
-	                }
-	            }
+	        spawnRaindrops();
+	        checkRainDrops();
+	 }
+	 
+	 private void spawnRaindrops()
+	 {
+		 if(TimeUtils.nanoTime() - lastDropTime > 300000000) {
+	            rainDrop.spawnRaindrop();
+	            lastDropTime = TimeUtils.nanoTime();
 	        }
 	 }
 	 
-	 private void spawnRaindrop() {
-	     Rectangle raindrop = new Rectangle();
-	     raindrop.x = MathUtils.random(0, 160-16);
-	     raindrop.y = 144;
-	     raindrop.width = 8;
-	     raindrop.height = 8;
-	     raindrops.add(raindrop);
-	     lastDropTime = TimeUtils.nanoTime();
+	 private void checkRainDrops()
+	 {
+		 Iterator<Rectangle> iter = rainDrop.raindrops.iterator(); 
+	     while(iter.hasNext()) {
+	         Rectangle raindrop = iter.next();
+	         raindrop.y = raindrop.getY() - (100 * Gdx.graphics.getDeltaTime());
+	         if(raindrop.y + 16 < 0) {
+	             iter.remove();
+	         }
+	         if(raindrop.overlaps(umbrella)) {
+	             //rainToUmbrellaSound.play();
+	             iter.remove();
+	         }
+	         else {
+	             Iterator<Rectangle> iter2 = cacti.iterator();
+	             while(iter2.hasNext()) {
+	                 Rectangle cactus = iter2.next();
+	                 if(raindrop.overlaps(cactus)) {
+	                     //rainToCactiSound.play();
+	                     iter.remove();
+	                 }
+	             }
+	         }
+	     }
 	 }
 	    
 	 private void placeCacti() {
