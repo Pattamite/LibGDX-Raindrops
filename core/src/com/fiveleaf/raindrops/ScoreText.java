@@ -12,7 +12,7 @@ public class ScoreText {
 	public ScoreText(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		font = new BitmapFont(Gdx.files.internal("GameBoy_S10.fnt"));
+		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
 	}
 	
 	public void draw(){

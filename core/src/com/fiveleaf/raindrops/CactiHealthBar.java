@@ -18,8 +18,8 @@ public class CactiHealthBar {
 		this.cacti = cacti;
 		this.gameScreen = gameScreen;
 		
-		healthBar = new Texture(Gdx.files.internal("HealthBar_0.png"));
-		remainHealth = new Texture(Gdx.files.internal("RemainHealth.png"));
+		healthBar = new Texture(Gdx.files.internal("assets/HealthBar_0.png"));
+		remainHealth = new Texture(Gdx.files.internal("assets/RemainHealth.png"));
 		
 		yPositionOffset = -19f;
 	}

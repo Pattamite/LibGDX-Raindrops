@@ -15,7 +15,7 @@ public class Fertilizer {
 	public Fertilizer(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		fertilizerImage = new Texture(Gdx.files.internal("Raindrops_Fertilizer.png"));
+		fertilizerImage = new Texture(Gdx.files.internal("assets/Raindrops_Fertilizer.png"));
 	}
 	
 	public void spawnFertilizer(float playerXPosition){

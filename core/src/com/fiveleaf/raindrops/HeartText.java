@@ -21,8 +21,8 @@ public class HeartText {
 	public HeartText(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		font = new BitmapFont(Gdx.files.internal("GameBoy_S10.fnt"));
-		heartImg = new Texture(Gdx.files.internal("Heart.png"));
+		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
+		heartImg = new Texture(Gdx.files.internal("assets/Heart.png"));
 	}
 	
 	public void draw(){

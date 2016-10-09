@@ -29,7 +29,7 @@ public class GameOverScreen extends ScreenAdapter{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 160, 144);
 		this.raindropsGame = raindropsGame;
-		font = new BitmapFont(Gdx.files.internal("GameBoy_S10.fnt"));
+		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
 		lastBlink = TimeUtils.millis();
 	}
 	

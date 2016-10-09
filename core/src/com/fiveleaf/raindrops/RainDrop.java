@@ -21,7 +21,7 @@ public class RainDrop {
 	public RainDrop(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		rainDropImage = new Texture(Gdx.files.internal("Raindrops_Rain.png"));
+		rainDropImage = new Texture(Gdx.files.internal("assets/Raindrops_Rain.png"));
 		raindropsRactangle = new Array<Rectangle>();
 	}
 	
