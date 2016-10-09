@@ -8,13 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MainScreen extends ScreenAdapter{
+public class HowToPlayScreen extends ScreenAdapter{
 	public SpriteBatch batch;
 	private RaindropsGame raindropsGame;
 	private BitmapFont font;
 	private OrthographicCamera camera;
 	
-	public MainScreen(RaindropsGame raindropsGame){
+	public HowToPlayScreen(RaindropsGame raindropsGame){
 		this.batch = raindropsGame.batch;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 160, 144);
@@ -33,13 +33,19 @@ public class MainScreen extends ScreenAdapter{
 	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
-	    font.draw(raindropsGame.batch, "Raindrops Keep ", 27, 130);
-	    font.draw(raindropsGame.batch, "Fallin'on", 45, 115);
-	    font.draw(raindropsGame.batch, "My Plants!", 45, 100);
-	    font.draw(raindropsGame.batch, "Press Spacebar", 26, 70);
-		font.draw(raindropsGame.batch, "To Play", 55, 60);
-		font.draw(raindropsGame.batch, "Press Down or S", 26, 35);
-		font.draw(raindropsGame.batch, "To See How to Play", 15, 25);
+	    font.draw(raindropsGame.batch, "~ Press Left arrow", 10, 140);
+	    font.draw(raindropsGame.batch, "or 'A' to move left", 22, 130);
+	    font.draw(raindropsGame.batch, "~ Press Right arrow", 10, 115);
+	    font.draw(raindropsGame.batch, "or 'D' to move left", 22, 105);
+	    font.draw(raindropsGame.batch, "~ Press Down arrow", 10, 90);
+	    font.draw(raindropsGame.batch, "or 's' to drop", 22, 80);
+	    font.draw(raindropsGame.batch, "fertilizer", 22, 70);
+	    font.draw(raindropsGame.batch, "~ Move Umbrella to", 10, 55);
+	    font.draw(raindropsGame.batch, "Block raindrops", 22, 45);
+	    font.draw(raindropsGame.batch, "as much as you can", 22, 35);
+	    font.draw(raindropsGame.batch, "Press Spacebar", 26, 20);
+		font.draw(raindropsGame.batch, "To Play", 55, 10);
+		
 	    batch.end();
 		
 		CheckInput();
@@ -49,9 +55,6 @@ public class MainScreen extends ScreenAdapter{
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
 			raindropsGame.PlayGame();
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
-		{
-			raindropsGame.HowToPlay();
-		}
 	}
+	
 }

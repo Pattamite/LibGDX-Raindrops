@@ -45,13 +45,13 @@ public class GameScreen extends ScreenAdapter{
 	public int[] moveTarget = {0, 0, 0};
 	
 	public static int MAX_WATERLEVEL = 75;
-	public static int SCORE_UMBRELLA = 1;
+	public static int SCORE_UMBRELLA = 10;
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
 	public static int SCORE_NEEDFERT = 0;
-	public static int FERTILIZER_COST = 25;
+	public static int FERTILIZER_COST = 250;
 	
-	private float rainToCactiSoundVolume = 0.35f;
+	private float rainToCactiSoundVolume = 0.55f;
 	private float fertToCactiSoundVolume = 0.8f;
 	private float cactusDeadSoundVolume = 0.6f;
 	private float raindropsMusicVolume = 1.0f;
@@ -144,7 +144,7 @@ public class GameScreen extends ScreenAdapter{
 	    }
 	}
 	private void spawnRaindrops(){
-	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 30000000 - Math.abs(100000000 * rainDropsCount)) {
+	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 30000000 - Math.abs(100000 * rainDropsCount)) {
 	        rainDropsCount = rainDropsCount + 1;
 	        rainDrop.spawnRaindrop();
 	        lastDropTime = TimeUtils.nanoTime();
@@ -230,6 +230,7 @@ public class GameScreen extends ScreenAdapter{
 	}
 	
 	private void gameOver(){
+		raindropsMusic.stop();
 		endTime = TimeUtils.millis();
 		raindropsGame.GameOver(this.score, (endTime-startTime)/1000);
 	}

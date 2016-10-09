@@ -16,7 +16,7 @@ public class RaindropsGame extends Game {
     public void create() {
     	
         batch = new SpriteBatch();
-        setScreen(new GameScreen(this));
+        setScreen(new MainScreen(this));
     }
     
     @Override
@@ -42,7 +42,14 @@ public class RaindropsGame extends Game {
     	setScreen(new GameOverScreen(this));
     }
     
-    public void PlayAgain(){
+    public void PlayGame(){
     	setScreen(new GameScreen(this));
+    }
+    
+    public void HowToPlay(){
+    	setScreen(new HowToPlayScreen(this));
+    }   
+    public void MainMenu(){
+    	setScreen(new MainScreen(this));
     }
 }

@@ -30,6 +30,7 @@ public class GameOverScreen extends ScreenAdapter{
 		camera.setToOrtho(false, 160, 144);
 		this.raindropsGame = raindropsGame;
 		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
+		font.setColor(15, 56, 15, 1);
 		lastBlink = TimeUtils.millis();
 	}
 	
@@ -41,17 +42,20 @@ public class GameOverScreen extends ScreenAdapter{
 	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
-		font.draw(raindropsGame.batch, "Game Over", 50, 120);
-		font.draw(raindropsGame.batch, "Time  :" + (int)(raindropsGame.time) ,17 , 105);
-		font.draw(raindropsGame.batch, "Score :" + raindropsGame.score ,17 , 90);
-		font.draw(raindropsGame.batch, "High Score :" + raindropsGame.highScore ,17 , 75);
+		font.draw(raindropsGame.batch, "Game Over", 50, 130);
+		font.draw(raindropsGame.batch, "Time  :" + (int)(raindropsGame.time) ,17 , 115);
+		font.draw(raindropsGame.batch, "Score :" + raindropsGame.score ,17 , 100);
+		font.draw(raindropsGame.batch, "High Score :" + raindropsGame.highScore ,17 , 85);
+		
 		if(raindropsGame.isNewHightScore)
 		{
 			Blinking();
-			if(isBlinking)font.draw(raindropsGame.batch, "!! New High Score !!"  ,10 , 60);
+			if(isBlinking)font.draw(raindropsGame.batch, "!! New High Score !!"  ,10 , 70);
 		}
-		font.draw(raindropsGame.batch, "Press Spacebar",26 ,45);
-		font.draw(raindropsGame.batch, "To replay",47 ,35);
+		font.draw(raindropsGame.batch, "Press Spacebar",26 ,55);
+		font.draw(raindropsGame.batch, "To replay",47 ,45);
+		font.draw(raindropsGame.batch, "Press Up or W", 33, 30);
+		font.draw(raindropsGame.batch, "To go to Main Menu", 16, 20);
 		batch.end();
 		
 		CheckInput();
@@ -66,7 +70,10 @@ public class GameOverScreen extends ScreenAdapter{
 	
 	private void CheckInput(){
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-			raindropsGame.PlayAgain();
+			raindropsGame.PlayGame();
+		}
+		else if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
+			raindropsGame.MainMenu();
 		}
 	}
 }

@@ -23,10 +23,11 @@ public class HeartText {
 		this.gameScreen = gameScreen;
 		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
 		heartImg = new Texture(Gdx.files.internal("assets/Heart.png"));
+		font.setColor(15, 56, 15, 1);
 	}
 	
 	public void draw(){
-		font.setColor(15, 56, 15, 1);
+		
 		font.draw(gameScreen.batch, "x " + gameScreen.heart , 140, 7);
 		if(isBlinkActivate)
 		{
