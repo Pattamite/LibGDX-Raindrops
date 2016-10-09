@@ -38,6 +38,8 @@ public class GameScreen extends ScreenAdapter{
 	private int fertilizerCount = 0;
 	public int score = 0;
 	public int heart = 9;
+	public long startTime = 0;
+	public long endTime = 0;
 	public int rainDropsCount = 0;
 	public int lastWaterLevel = 0;
 	public int[] moveTarget = {0, 0, 0};
@@ -47,6 +49,7 @@ public class GameScreen extends ScreenAdapter{
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
 	public static int SCORE_NEEDFERT = 0;
+	public static int FERTILIZER_COST = 25;
 	
 	private float rainToCactiSoundVolume = 0.35f;
 	private float fertToCactiSoundVolume = 0.8f;
@@ -56,6 +59,7 @@ public class GameScreen extends ScreenAdapter{
 	public GameScreen(RaindropsGame raindropsGame) {
 		this.raindropsGame = raindropsGame;
 		this.batch = raindropsGame.batch;
+		startTime = TimeUtils.millis();
 		fertilizer = new Fertilizer(this.raindropsGame, this);
 		rainDrop = new RainDrop(this.raindropsGame, this);
 		umbrella = new Umbrella(this.raindropsGame, this);
@@ -67,7 +71,7 @@ public class GameScreen extends ScreenAdapter{
 	    
 	    rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusRainHit.wav"));
 	    fertToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusFertHit.wav"));
-	    cactusDeadSound = Gdx.audio.newSound(Gdx.files.internal("assets/cactusDead.wav"));
+	    cactusDeadSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusDead.wav"));
 	    
 	    raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/Raindrops_BGM.wav"));
 	    
@@ -84,7 +88,7 @@ public class GameScreen extends ScreenAdapter{
 	    Gdx.gl.glClearColor(0.6055f, 0.7344f, 0.0586f, 1.0f);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	    
-		camera.update();
+	    camera.update();
 		controlUmbrella();
 	    spawnRaindrops();
 	    checkRainDrops();
@@ -131,15 +135,16 @@ public class GameScreen extends ScreenAdapter{
 	            umbrella.umbrellaRactangle.x = umbrella.umbrellaRactangle.getX() + 3;
 	        }
 	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.DOWN )|| Gdx.input.isKeyPressed(Input.Keys.S)) {
-	        if(fertilizerCount == 0) {
+	    if((Gdx.input.isKeyPressed(Input.Keys.DOWN )|| Gdx.input.isKeyPressed(Input.Keys.S))) {
+	        if((fertilizerCount == 0) && (this.score > FERTILIZER_COST)) {
+	            this.score = this.score - FERTILIZER_COST;
 	            fertilizer.spawnFertilizer(umbrella.umbrellaRactangle.getX());
 	            fertilizerCount = fertilizerCount + 1;
 	        }
 	    }
 	}
 	private void spawnRaindrops(){
-	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 40000000 - (100 * rainDropsCount) || (TimeUtils.nanoTime() - lastDropTime)/10 > 40000000 - (10000 * (rainDropsCount % 5000))) {
+	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 30000000 - Math.abs(100000000 * rainDropsCount)) {
 	        rainDropsCount = rainDropsCount + 1;
 	        rainDrop.spawnRaindrop();
 	        lastDropTime = TimeUtils.nanoTime();
@@ -169,6 +174,7 @@ public class GameScreen extends ScreenAdapter{
 	        if(raindrop.overlaps(umbrella.umbrellaRactangle)) {
 	            //rainToUmbrellaSound.play();
 	            iterRaindrop.remove();
+	            cactiCounter = cactiCounter - 1;
 	            addScore(SCORE_UMBRELLA);
 	        }
 	        else {
@@ -224,6 +230,7 @@ public class GameScreen extends ScreenAdapter{
 	}
 	
 	private void gameOver(){
-		raindropsGame.GameOver(this.score);
+		endTime = TimeUtils.millis();
+		raindropsGame.GameOver(this.score, (endTime-startTime)/1000);
 	}
 }

@@ -28,7 +28,7 @@ public class WaterLevel {
         return level;
     }
     public void draw() {
-        if(MathUtils.randomBoolean((float)(this.getWaterLevel() * 0.005))){
+        if(MathUtils.randomBoolean((float)(this.getWaterLevel() * 0.0075))){
             calcWave();
         }
         waterRectangle.x = waterRectangle.getX() + (wave * Gdx.graphics.getDeltaTime());
@@ -39,6 +39,6 @@ public class WaterLevel {
         wave = MathUtils.random(-(this.getWaterLevel() / 2), (this.getWaterLevel() / 2));
     }
     public int moveCactus() {
-        return MathUtils.random(-5, 15) * wave;
+        return MathUtils.random(-15, 35) * wave;
     }
 }
