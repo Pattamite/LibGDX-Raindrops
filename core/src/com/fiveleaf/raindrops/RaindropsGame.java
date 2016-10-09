@@ -28,23 +28,19 @@ public class RaindropsGame extends Game {
         batch.dispose();
     }
     
-    public void GameOver(int score)
-    {
+    public void GameOver(int score){
     	this.score = score;
-    	if(score > highScore)
-    	{
+    	if(score > highScore){
     		isNewHightScore = true;
     		highScore = score;
     	}
-    	else
-    	{
-    			isNewHightScore = false;
+    	else{
+    		isNewHightScore = false;
     	}
     	setScreen(new GameOverScreen(this));
     }
     
-    public void PlayAgain()
-    {
+    public void PlayAgain(){
     	setScreen(new GameScreen(this));
     }
 }

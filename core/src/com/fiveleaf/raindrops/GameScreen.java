@@ -44,7 +44,7 @@ public class GameScreen extends ScreenAdapter{
 	public static int SCORE_UMBRELLA = 1;
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
-	public static int SCORE_NEEDFERT = 50;
+	public static int SCORE_NEEDFERT = 0;
 	
 	public GameScreen(RaindropsGame raindropsGame) {
 		this.raindropsGame = raindropsGame;
@@ -214,6 +214,7 @@ public class GameScreen extends ScreenAdapter{
 	
 	public void cactusDead(){
 		heart--;
+		heartText.ActivateBlink();
 		if(heart <= 0) gameOver();
 		
 	}
