@@ -42,12 +42,13 @@ public class GameOverScreen extends ScreenAdapter{
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
 		font.draw(raindropsGame.batch, "Game Over", 50, 120);
-		font.draw(raindropsGame.batch, "Score :" + raindropsGame.score ,17 , 100);
-		font.draw(raindropsGame.batch, "High Score :" + raindropsGame.highScore ,17 , 85);
+		font.draw(raindropsGame.batch, "Time  :" + (int)(raindropsGame.time) ,17 , 105);
+		font.draw(raindropsGame.batch, "Score :" + raindropsGame.score ,17 , 90);
+		font.draw(raindropsGame.batch, "High Score :" + raindropsGame.highScore ,17 , 75);
 		if(raindropsGame.isNewHightScore)
 		{
 			Blinking();
-			if(isBlinking)font.draw(raindropsGame.batch, "!! New High Score !!"  ,10 , 65);
+			if(isBlinking)font.draw(raindropsGame.batch, "!! New High Score !!"  ,10 , 60);
 		}
 		font.draw(raindropsGame.batch, "Press Spacebar",26 ,45);
 		font.draw(raindropsGame.batch, "To replay",47 ,35);

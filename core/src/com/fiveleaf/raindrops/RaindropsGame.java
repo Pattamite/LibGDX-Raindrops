@@ -9,6 +9,7 @@ public class RaindropsGame extends Game {
     public SpriteBatch batch;
     public int highScore = 0;
     public int score = 0;
+    public long time = 0;
     public boolean isNewHightScore = true;
     
     @Override
@@ -28,8 +29,9 @@ public class RaindropsGame extends Game {
         batch.dispose();
     }
     
-    public void GameOver(int score){
+    public void GameOver(int score, long time){
     	this.score = score;
+    	this.time = time;
     	if(score > highScore){
     		isNewHightScore = true;
     		highScore = score;

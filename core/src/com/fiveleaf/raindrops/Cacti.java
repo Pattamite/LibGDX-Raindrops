@@ -100,11 +100,11 @@ public class Cacti {
 		for(Rectangle cactus: cactiRectangle) {
 			if(gameScreen.moveTarget != null){
 				if(gameScreen.moveTarget[counter] > 0){
-					cactus.x = cactus.getX() + (20 * Gdx.graphics.getDeltaTime());
+					cactus.x = cactus.getX() + (30 * Gdx.graphics.getDeltaTime());
 					gameScreen.moveTarget[counter] = gameScreen.moveTarget[counter] - 2;
 				}
 				else if(gameScreen.moveTarget[counter] < 0){
-					cactus.x = cactus.getX() - (20 * Gdx.graphics.getDeltaTime());
+					cactus.x = cactus.getX() - (30 * Gdx.graphics.getDeltaTime());
 					gameScreen.moveTarget[counter] = gameScreen.moveTarget[counter] + 2;
 				}
 			}
