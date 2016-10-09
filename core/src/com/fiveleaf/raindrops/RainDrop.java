@@ -37,7 +37,7 @@ public class RainDrop {
 	 }
 	public void draw(){
 		for(Rectangle raindrop: raindropsRactangle) {
-            gameScreen.batch.draw(rainDropImage, raindrop.x, raindrop.y);
+            gameScreen.batch.draw(rainDropImage, (int)raindrop.x, (int)raindrop.y);
         }
 	}
 	
