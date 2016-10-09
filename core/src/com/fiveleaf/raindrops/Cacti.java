@@ -13,6 +13,8 @@ public class Cacti {
 	public static int STATUS_INVINCIBLE = -1;
 	public static int STATUS_DEAD = -2;
 	
+	public static int STARTING_Y = 16;
+	
 	private Texture cactusImage;
 	public Array<Rectangle> cactiRectangle;
 	public int cactusStatus[];
@@ -62,19 +64,19 @@ public class Cacti {
 	private void placeCacti() {
 	    Rectangle cactus = new Rectangle();
 	    cactus.x = (160 / 2) - (52 + 16);
-	    cactus.y = 32 - (32 / 2);
+	    cactus.y = STARTING_Y;
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
 	    cactus = new Rectangle();
 	    cactus.x = (160 / 2) - (32 / 2);
-	    cactus.y = 32 - (32 / 2);
+	    cactus.y = STARTING_Y;
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
 	    cactus = new Rectangle();
 	    cactus.x = (160 / 2) + (52 - 16);
-	    cactus.y = 32 - (32 / 2);
+	    cactus.y = STARTING_Y;
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);       
@@ -137,8 +139,7 @@ public class Cacti {
 		cactusStatus[target] = STATUS_DEAD;
 		cactiRectangle.get(target).width = 0;
 		cactiRectangle.get(target).height = 0;
-		cactiRectangle.get(target).x = -1;
-		cactiRectangle.get(target).y = -1;
+		cactiRectangle.get(target).y = -100;
 	}
 	
 	public void setStatus(int target, int status, int value)
