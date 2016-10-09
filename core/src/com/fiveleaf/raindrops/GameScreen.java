@@ -29,15 +29,16 @@ public class GameScreen extends ScreenAdapter{
 	private CactiHealthBar cactiHealthBar;
 	private ScoreText scoreText;
 	private WaterLevel water;
+	private HeartText heartText;
 	private long lastDropTime;
 	private long lastMoveTime;
 	private int cactiCounter;
 	private int fertilizerCount = 0;
-	public int score;
-	public int heart;
+	public int score = 0;
+	public int heart = 9;
 	public int rainDropsCount = 0;
 	public int lastWaterLevel = 0;
-	public static int MAX_WATERLEVEL = 55;
+	public static int MAX_WATERLEVEL = 55 + 10;
 	public static int SCORE_UMBRELLA = 1;
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
@@ -52,6 +53,7 @@ public class GameScreen extends ScreenAdapter{
 		cactiHealthBar = new CactiHealthBar(cacti, this);
 		scoreText = new ScoreText(this.raindropsGame, this);
 	    water = new WaterLevel(this.raindropsGame, this);
+	    heartText = new HeartText(this.raindropsGame, this);
 	//Sound
 	    //rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
 	    //rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
@@ -62,9 +64,6 @@ public class GameScreen extends ScreenAdapter{
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, 160, 144);
 	    rainDrop.spawnRaindrop();
-	    
-	    score = 0;
-	    heart = 5;
 	}
 	
 	@Override
@@ -87,6 +86,7 @@ public class GameScreen extends ScreenAdapter{
 	    fertilizer.draw();
 	    cactiHealthBar.draw();
 	    scoreText.draw();
+	    heartText.draw();
 	    batch.end();  
 	}
 	private void waterControl() {
@@ -174,6 +174,7 @@ public class GameScreen extends ScreenAdapter{
 	                    //rainToCactiSound.play();
 	                    iterRaindrop.remove();
 	                    cacti.rainHit(cactiCounter);
+	                    break;
 	                }
 	                cactiCounter++;
 	            }
@@ -209,5 +210,17 @@ public class GameScreen extends ScreenAdapter{
 	public void addScore(int value)
 	{
 		score += value;
+	}
+	
+	public void cactusDead()
+	{
+		heart--;
+		if(heart <= 0) gameOver();
+		
+	}
+	
+	private void gameOver()
+	{
+		raindropsGame.GameOver(this.score);
 	}
 }
