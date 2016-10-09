@@ -23,20 +23,21 @@ public class GameScreen extends ScreenAdapter{
 	public SpriteBatch batch;
 	private RaindropsGame raindropsGame;
 	private RainDrop rainDrop;
-	private Umbrella umbrella;
+	public Umbrella umbrella;
 	private Fertilizer fertilizer;
 	private Cacti cacti;
 	private CactiHealthBar cactiHealthBar;
 	private ScoreText scoreText;
 	private WaterLevel water;
 	private long lastDropTime;
+	private long lastMoveTime;
 	private int cactiCounter;
 	private int fertilizerCount = 0;
 	public int score;
 	public int heart;
 	public int rainDropsCount = 0;
 	public int lastWaterLevel = 0;
-	public static int MAX_WATERLEVEL = 60;
+	public static int MAX_WATERLEVEL = 55;
 	public static int SCORE_UMBRELLA = 1;
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
@@ -97,7 +98,11 @@ public class GameScreen extends ScreenAdapter{
                 cactus.y = cactus.getY() + 1;
                 cactiCounter++;
             }
+            umbrella.umbrellaRactangle.y = umbrella.umbrellaRactangle.getY() + 1;
             lastWaterLevel = water.getWaterLevel();
+	    }
+	    if(water.getWaterLevel() > Cacti.STARTING_Y + 16){
+	        cactiFloat();
 	    }
 	}
 	private void controlUmbrella()
@@ -128,6 +133,24 @@ public class GameScreen extends ScreenAdapter{
 	        //rainToCactiSound.play();
 	    }
 	}
+	private void cactiFloat(){
+        if(TimeUtils.nanoTime() - lastMoveTime > (500000000)) {
+            lastMoveTime = TimeUtils.nanoTime();
+            Iterator<Rectangle> iterCacti = cacti.cactiRectangle.iterator();
+            cactiCounter = 0;
+            while(iterCacti.hasNext()) {
+                Rectangle cactus = iterCacti.next();
+                cactus.x = cactus.getX() + water.moveCactus();
+                if(cactus.getX() < 0){
+                	cactus.x = 0;
+                }
+                else if(cactus.getX() > (160 - 32)){
+                	cactus.x = 160 - 32;
+                }
+                cactiCounter++;
+            }
+        }
+    }
 	private void checkRainDrops()
 	{
 	    Iterator<Rectangle> iterRaindrop = rainDrop.raindropsRactangle.iterator(); 

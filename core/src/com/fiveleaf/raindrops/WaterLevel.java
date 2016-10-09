@@ -2,6 +2,7 @@ package com.fiveleaf.raindrops;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 
 public class WaterLevel {
     
@@ -24,5 +25,8 @@ public class WaterLevel {
     }
     public void draw() {
         gameScreen.batch.draw(waterTexture, 0, (this.getWaterLevel()) - 160);
+    }
+    public int moveCactus() {
+        return MathUtils.random(-10, 10) * (this.getWaterLevel()) / 30;
     }
 }

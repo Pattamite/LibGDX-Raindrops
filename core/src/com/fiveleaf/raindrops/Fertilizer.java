@@ -18,7 +18,7 @@ public class Fertilizer {
 	public void spawnFertilizer(float playerXPosition){
 	    fertilizer = new Rectangle();
 	    fertilizer.x = playerXPosition + 16;
-	    fertilizer.y = 48 + 24;
+	    fertilizer.y = gameScreen.umbrella.umbrellaRactangle.getY() + 16;
 	    fertilizer.width = 16;
 	    fertilizer.height = 16;
 	}

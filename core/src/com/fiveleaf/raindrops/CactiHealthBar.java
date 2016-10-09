@@ -36,10 +36,10 @@ public class CactiHealthBar {
 			else if(tempHealth > cacti.cactusMaxHealth) tempHealth = cacti.cactusMaxHealth;
 			
 			gameScreen.batch.draw(healthBar, cacti.cactiRectangle.get(counter).x, 
-					cacti.cactiRectangle.get(counter).y + yPositionOffset);
+			    cacti.cactiRectangle.get(counter).y + yPositionOffset);
 			gameScreen.batch.draw(remainHealth, cacti.cactiRectangle.get(counter).x + 6, 
-					cacti.cactiRectangle.get(counter).y + yPositionOffset + 15,
-					 20 * tempHealth / cacti.cactusMaxHealth , 2);
+			    cacti.cactiRectangle.get(counter).y + yPositionOffset + 15,
+			    20 * tempHealth / cacti.cactusMaxHealth , 2);
 		}
 	}
 }
