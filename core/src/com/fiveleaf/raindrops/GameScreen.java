@@ -73,7 +73,6 @@ public class GameScreen extends ScreenAdapter{
 	    spawnRaindrops();
 	    checkRainDrops();
 	    checkFertilizer();
-	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
 	    umbrella.draw();

@@ -14,7 +14,7 @@ public class RaindropsGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        setScreen(new GameOverScreen(this));
+        setScreen(new GameScreen(this));
     }
     
     @Override
