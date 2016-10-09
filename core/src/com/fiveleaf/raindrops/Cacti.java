@@ -17,6 +17,8 @@ public class Cacti {
 	public Array<Rectangle> cactiRectangle;
 	public int cactusStatus[];
 	public int cactusHealth[];
+	public int needRain[];
+	public int needFert[];
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
 	public int cactusMaxHealth = 5;
@@ -28,6 +30,14 @@ public class Cacti {
 		this.gameScreen = gameScreen;
 		cactusImage = new Texture(Gdx.files.internal("Raindrops_Cactus.png"));
 		cactiRectangle = new Array<Rectangle>();
+		
+		
+		setUpArray();
+		placeCacti();
+	}
+	
+	private void setUpArray()
+	{
 		cactusHealth = new int[3];
 		cactusHealth[0] = cactusMaxHealth;
 		cactusHealth[1] = cactusMaxHealth;
@@ -38,28 +48,36 @@ public class Cacti {
 		cactusStatus[1] = STATUS_NORMAL;
 		cactusStatus[2] = STATUS_NORMAL;
 		
-		placeCacti();
+		needRain = new int[3];
+		needRain[0] = 0;
+		needRain[1] = 0;
+		needRain[2] = 0;
+		
+		needFert = new int[3];
+		needFert[0] = 0;
+		needFert[1] = 0;
+		needFert[2] = 0;
 	}
 	
 	private void placeCacti() {
-	     Rectangle cactus = new Rectangle();
-	     cactus.x = (160 / 2) - (52 + 16);
-	     cactus.y = 48 - (32 / 2);
-	     cactus.width = 32;
-	     cactus.height = 32;
-	     cactiRectangle.add(cactus);
-	     cactus = new Rectangle();
-	     cactus.x = (160 / 2) - (32 / 2);
-	     cactus.y = 48 - (32 / 2);
-	     cactus.width = 32;
-	     cactus.height = 32;
-	     cactiRectangle.add(cactus);
-	     cactus = new Rectangle();
-	     cactus.x = (160 / 2) + (52 - 16);
-	     cactus.y = 48 - (32 / 2);
-	     cactus.width = 32;
-	     cactus.height = 32;
-	     cactiRectangle.add(cactus);       
+	    Rectangle cactus = new Rectangle();
+	    cactus.x = (160 / 2) - (52 + 16);
+	    cactus.y = 48 - (32 / 2);
+	    cactus.width = 32;
+	    cactus.height = 32;
+	    cactiRectangle.add(cactus);
+	    cactus = new Rectangle();
+	    cactus.x = (160 / 2) - (32 / 2);
+	    cactus.y = 48 - (32 / 2);
+	    cactus.width = 32;
+	    cactus.height = 32;
+	    cactiRectangle.add(cactus);
+	    cactus = new Rectangle();
+	    cactus.x = (160 / 2) + (52 - 16);
+	    cactus.y = 48 - (32 / 2);
+	    cactus.width = 32;
+	    cactus.height = 32;
+	    cactiRectangle.add(cactus);       
 	 }
 	
 	public void draw()
@@ -74,7 +92,7 @@ public class Cacti {
         }
 	}
 	
-	public void hit(int target)
+	public void rainHit(int target)
 	{
 		if(cactusStatus[target] == STATUS_NORMAL || cactusStatus[target] == STATUS_NEEDFERT)
 		{
@@ -82,6 +100,14 @@ public class Cacti {
 			if(cactusHealth[target] <= 0)
 			{
 				cactusDead(target);
+			}
+		}
+		else if(cactusStatus[target] == STATUS_NEEDRAIN)
+		{
+			needRain[target]--;
+			if(needRain[target] <= 0)
+			{
+				setStatus(target, STATUS_NORMAL, 0);
 			}
 		}
 	}
@@ -93,5 +119,40 @@ public class Cacti {
 		cactiRectangle.get(target).height = 0;
 		cactiRectangle.get(target).x = -1;
 		cactiRectangle.get(target).y = -1;
+	}
+	
+	public void setStatus(int target, int status, int value)
+	{
+		if(cactusStatus[target] != STATUS_DEAD)
+		{
+			cactusStatus[target] = status;
+			if(status == STATUS_NEEDRAIN) setNeedRain(target, value);
+			else if(status == STATUS_NEEDFERT) setNeedFert(target, value);
+		}
+		
+	}
+	
+	public void setNeedRain(int target, int value)
+	{
+		if(cactusStatus[target] == STATUS_NEEDRAIN)
+		{
+			needRain[target] = value;
+		}
+		else
+		{
+			System.out.println("ERROR : Cannot set cactus's NeedRain -> cactusStatus is not STATUS_NEEDRAIN");
+		}
+	}
+	
+	public void setNeedFert(int target, int value)
+	{
+		if(cactusStatus[target] == STATUS_NEEDFERT)
+		{
+			needFert[target] = value;
+		}
+		else
+		{
+			System.out.println("ERROR : Cannot set cactus's NeedFert -> cactusStatus is not STATUS_NEEDFERT");
+		}
 	}
 }

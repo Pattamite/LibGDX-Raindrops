@@ -112,7 +112,7 @@ public class GameScreen extends ScreenAdapter{
 	                 if(raindrop.overlaps(cactus)) {
 	                     //rainToCactiSound.play();
 	                     iterRaindrop.remove();
-	                     cacti.hit(cactiCounter);
+	                     cacti.rainHit(cactiCounter);
 	                 }
 	                 cactiCounter++;
 	             }

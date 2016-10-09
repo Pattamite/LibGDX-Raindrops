@@ -11,6 +11,10 @@ public class RainDrop {
 	public Array<Rectangle> raindropsRactangle;
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
+	private float randomPosition;
+	private int lastPosition;
+	private int streak = 0;
+	private int maxStreak = 3;
 	
 	public RainDrop(RaindropsGame raindropsGame, GameScreen gameScreen)
 	{
@@ -21,17 +25,104 @@ public class RainDrop {
 	}
 	
 	public void spawnRaindrop() {
-	     Rectangle raindrop = new Rectangle();
-	     raindrop.x = MathUtils.random(0, 160-16);
-	     raindrop.y = 144;
-	     raindrop.width = 8;
-	     raindrop.height = 8;
-	     raindropsRactangle.add(raindrop);
+		randomPosition = randomCactiPosition();
+		
+	    Rectangle raindrop = new Rectangle();
+	    raindrop.x = MathUtils.random(-8, 24) + randomPosition;
+	    raindrop.y = 144;
+	    raindrop.width = 8;
+	    raindrop.height = 8;
+	    raindropsRactangle.add(raindrop);
 	 }
 	public void draw()
 	{
 		for(Rectangle raindrop: raindropsRactangle) {
             gameScreen.batch.draw(rainDropImage, raindrop.x, raindrop.y);
         }
+	}
+	
+	private float randomCactiPosition()
+	{
+		float position = MathUtils.random(0, 3);
+		if(position < 1f)
+		{
+			if(lastPosition == 1) streak++;
+			else streak = 1;
+			if(streak < maxStreak)
+			{
+				lastPosition = 1;
+				return 12f;
+			}
+			else
+			{
+				position = MathUtils.random(0, 2);
+				if(position < 1)
+				{
+					streak = 1;
+					lastPosition = 2;
+					return 64f;
+				}
+				else
+				{
+					streak = 1;
+					lastPosition = 3;
+					return 116f;
+				}
+			}
+			
+		}
+		else if(position < 2f)
+		{
+			if(lastPosition == 2) streak++;
+			else streak = 1;
+			if(streak < maxStreak)
+			{
+				lastPosition = 2;
+				return 64f;
+			}
+			else
+			{
+				position = MathUtils.random(0, 2);
+				if(position < 1)
+				{
+					streak = 1;
+					lastPosition = 1;
+					return 12f;
+				}
+				else
+				{
+					streak = 1;
+					lastPosition = 3;
+					return 116f;
+				}
+			}
+			
+		}
+		else
+		{
+			if(lastPosition == 3) streak++;
+			else streak = 1;
+			if(streak < maxStreak)
+			{
+				lastPosition = 3;
+				return 116f;
+			}
+			else
+			{
+				position = MathUtils.random(0, 2);
+				if(position < 1)
+				{
+					streak = 1;
+					lastPosition = 1;
+					return 12f;
+				}
+				else
+				{
+					streak = 1;
+					lastPosition = 2;
+					return 64f;
+				}
+			}
+		}
 	}
 }
