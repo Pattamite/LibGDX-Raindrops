@@ -1,0 +1,24 @@
+package com.fiveleaf.raindrops;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
+public class ScoreText {
+	private RaindropsGame raindropsGame;
+	private GameScreen gameScreen;
+	private BitmapFont font;
+	
+	
+	public ScoreText(RaindropsGame raindropsGame, GameScreen gameScreen)
+	{
+		this.raindropsGame = raindropsGame;
+		this.gameScreen = gameScreen;
+		font = new BitmapFont(Gdx.files.internal("GameBoy_S10.fnt"));
+	}
+	
+	public void draw()
+	{
+		font.setColor(15, 56, 15, 1);
+		font.draw(gameScreen.batch, "Score : " + gameScreen.score , 2, 7);
+	}
+}

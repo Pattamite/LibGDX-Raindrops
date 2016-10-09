@@ -26,8 +26,15 @@ public class GameScreen extends ScreenAdapter{
 	 private Umbrella umbrella;
 	 private Cacti cacti;
 	 private CactiHealthBar cactiHealthBar;
+	 private ScoreText scoreText;
 	 private long lastDropTime;
 	 private int cactiCounter;
+	 public int score;
+	 public int heart;
+	 public static int SCORE_UMBRELLA = 1;
+	 public static int SCORE_NEEDRAINEACH = 10;
+	 public static int SCORE_NEEDRAINCOMPLETE = 100;
+	 public static int SCORE_NEEDFERT = 50;
 	    
 	 public GameScreen(RaindropsGame raindropsGame) {
 		 this.raindropsGame = raindropsGame;
@@ -36,6 +43,7 @@ public class GameScreen extends ScreenAdapter{
 		 umbrella = new Umbrella(this.raindropsGame, this);
 		 cacti = new Cacti(this.raindropsGame, this);
 		 cactiHealthBar = new CactiHealthBar(cacti, this);
+		 scoreText = new ScoreText(this.raindropsGame, this);
 	     //Sound
 	     	//rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
 	     	//rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
@@ -46,6 +54,9 @@ public class GameScreen extends ScreenAdapter{
 	     camera = new OrthographicCamera();
 	     camera.setToOrtho(false, 160, 144);
 	     rainDrop.spawnRaindrop();
+	     
+	     score = 0;
+	     heart = 5;
 	 }
 	 
 	 @Override
@@ -64,6 +75,7 @@ public class GameScreen extends ScreenAdapter{
 	     rainDrop.draw();
 	     cacti.draw();
 	     cactiHealthBar.draw();
+	     scoreText.draw();
 	     batch.end();  
 	 }
 	 
@@ -103,6 +115,7 @@ public class GameScreen extends ScreenAdapter{
 	         if(raindrop.overlaps(umbrella.umbrellaRactangle)) {
 	             //rainToUmbrellaSound.play();
 	             iterRaindrop.remove();
+	             addScore(SCORE_UMBRELLA);
 	         }
 	         else {
 	             Iterator<Rectangle> iterCacti = cacti.cactiRectangle.iterator();
@@ -120,5 +133,8 @@ public class GameScreen extends ScreenAdapter{
 	     }
 	 }
 	    
-	 
+	 public void addScore(int value)
+	 {
+		 score += value;
+	 }
 }

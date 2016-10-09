@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class RaindropsGame extends Game {
    
     public SpriteBatch batch;
-   
+    public int highScore = 0;
+    public int score = 0;
     
     @Override
     public void create() {
