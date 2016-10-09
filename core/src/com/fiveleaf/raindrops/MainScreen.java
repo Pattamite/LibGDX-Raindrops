@@ -12,6 +12,7 @@ public class MainScreen extends ScreenAdapter{
 	public SpriteBatch batch;
 	private RaindropsGame raindropsGame;
 	private BitmapFont font;
+	private BitmapFont font2;
 	private OrthographicCamera camera;
 	
 	public MainScreen(RaindropsGame raindropsGame){
@@ -20,6 +21,7 @@ public class MainScreen extends ScreenAdapter{
 		camera.setToOrtho(false, 160, 144);
 		this.raindropsGame = raindropsGame;
 		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
+		font2 = new BitmapFont(Gdx.files.internal("assets/GameBoy.fnt"));
 		font.setColor(15, 56, 15, 1);
 		
 	}
@@ -40,6 +42,7 @@ public class MainScreen extends ScreenAdapter{
 		font.draw(raindropsGame.batch, "To Play", 55, 60);
 		font.draw(raindropsGame.batch, "Press Down or S", 26, 35);
 		font.draw(raindropsGame.batch, "To See How to Play", 15, 25);
+		font2.draw(raindropsGame.batch, "5-leaf-clover studio", 22, 10);
 	    batch.end();
 		
 		CheckInput();
