@@ -148,7 +148,6 @@ public class Cacti {
 		cactiRectangle.get(target).y -= 200;
 		lastDeadTime[target] = TimeUtils.millis();
 		gameScreen.cactusDead();
-		System.out.println(">" +cactusStatus[target]);
 	}
 	
 	public void setStatus(int target, int status, int value)

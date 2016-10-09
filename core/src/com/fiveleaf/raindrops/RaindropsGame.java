@@ -9,7 +9,7 @@ public class RaindropsGame extends Game {
     public SpriteBatch batch;
     public int highScore = 0;
     public int score = 0;
-    public boolean isNewHightScore;
+    public boolean isNewHightScore = true;
     
     @Override
     public void create() {
@@ -43,4 +43,8 @@ public class RaindropsGame extends Game {
     	setScreen(new GameOverScreen(this));
     }
     
+    public void PlayAgain()
+    {
+    	setScreen(new GameScreen(this));
+    }
 }

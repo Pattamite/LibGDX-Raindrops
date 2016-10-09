@@ -1,6 +1,7 @@
 package com.fiveleaf.raindrops;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,7 +17,7 @@ public class GameOverScreen extends ScreenAdapter{
 	private RaindropsGame raindropsGame;
 	private BitmapFont font;
 	private OrthographicCamera camera;
-	private long blinkFreq = 300;
+	private long blinkFreq = 200;
 	private boolean isBlinking = true;
 	private long lastBlink;
 	
@@ -39,15 +40,20 @@ public class GameOverScreen extends ScreenAdapter{
 	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
-		font.draw(raindropsGame.batch, "Game Over", 50, 110);
-		font.draw(raindropsGame.batch, "Score :" + raindropsGame.highScore ,17 , 90);
-		font.draw(raindropsGame.batch, "High Score :" + raindropsGame.highScore ,17 , 75);
+		font.draw(raindropsGame.batch, "Game Over", 50, 120);
+		font.draw(raindropsGame.batch, "Score :" + raindropsGame.score ,17 , 100);
+		font.draw(raindropsGame.batch, "High Score :" + raindropsGame.highScore ,17 , 85);
 		if(raindropsGame.isNewHightScore)
 		{
 			Blinking();
-			if(isBlinking)font.draw(raindropsGame.batch, "!! New High Score !!"  ,10 , 55);
+			if(isBlinking)font.draw(raindropsGame.batch, "!! New High Score !!"  ,10 , 65);
 		}
-		batch.end();  
+		
+		font.draw(raindropsGame.batch, "Press Spacebar",26 ,45);
+		font.draw(raindropsGame.batch, "To replay",47 ,35);
+		batch.end();
+		
+		CheckInput();
 	}
 	
 	private void Blinking()
@@ -56,6 +62,14 @@ public class GameOverScreen extends ScreenAdapter{
 		{
 			lastBlink = TimeUtils.millis();
 			isBlinking = !isBlinking;
+		}
+	}
+	
+	private void CheckInput()
+	{
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+		{
+			raindropsGame.PlayAgain();
 		}
 	}
 }
