@@ -206,7 +206,7 @@ public class GameScreen extends ScreenAdapter{
 	            while(iterCacti.hasNext()) {
 	                Rectangle cactus = iterCacti.next();
 	                if(targetFertilizer.overlaps(cactus)) {
-	                    //rainToCactiSound.play();
+	                	fertToCactiSound.play(fertToCactiSoundVolume);
 	                    fertilizer.fertilizer = null;
 	                    fertilizerCount = 0;
 	                    addScore(SCORE_NEEDFERT);
@@ -224,8 +224,8 @@ public class GameScreen extends ScreenAdapter{
 	public void cactusDead(){
 		heart--;
 		heartText.ActivateBlink();
+		cactusDeadSound.play(cactusDeadSoundVolume);
 		if(heart <= 0) gameOver();
-		
 	}
 	
 	private void gameOver(){
