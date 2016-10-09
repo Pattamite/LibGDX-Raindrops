@@ -9,9 +9,11 @@ public class RaindropsGame extends Game {
     public SpriteBatch batch;
     public int highScore = 0;
     public int score = 0;
+    private boolean isNewHightScore;
     
     @Override
     public void create() {
+    	
         batch = new SpriteBatch();
         setScreen(new GameScreen(this));
     }
