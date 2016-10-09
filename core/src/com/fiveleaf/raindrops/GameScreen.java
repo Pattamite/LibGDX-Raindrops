@@ -73,6 +73,7 @@ public class GameScreen extends ScreenAdapter{
 	    spawnRaindrops();
 	    checkRainDrops();
 	    checkFertilizer();
+	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
 	    umbrella.draw();
@@ -177,7 +178,12 @@ public class GameScreen extends ScreenAdapter{
 	public void cactusDead()
 	{
 		heart--;
-		//if(heart <= ) gameover();
+		if(heart <= 0) gameOver();
 		
+	}
+	
+	private void gameOver()
+	{
+		raindropsGame.GameOver(this.score);
 	}
 }
