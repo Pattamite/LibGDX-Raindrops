@@ -21,7 +21,7 @@ public class Cacti {
 	public int needFert[];
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
-	public int cactusMaxHealth = 8;
+	public int cactusMaxHealth = 5;
 	private int counter;
 	
 	public Cacti(RaindropsGame raindropsGame, GameScreen gameScreen)
