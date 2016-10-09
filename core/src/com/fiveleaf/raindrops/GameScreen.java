@@ -48,7 +48,7 @@ public class GameScreen extends ScreenAdapter{
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
 	public static int SCORE_NEEDFERT = 0;
 	
-	private float rainToCactiSoundVolume = 0.35f;
+	private float rainToCactiSoundVolume = 0.5f;
 	private float fertToCactiSoundVolume = 0.8f;
 	private float cactusDeadSoundVolume = 0.6f;
 	private float raindropsMusicVolume = 1.0f;
@@ -67,7 +67,7 @@ public class GameScreen extends ScreenAdapter{
 	    
 	    rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusRainHit.wav"));
 	    fertToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusFertHit.wav"));
-	    cactusDeadSound = Gdx.audio.newSound(Gdx.files.internal("assets/cactusDead.wav"));
+	    cactusDeadSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusDead.wav"));
 	    
 	    raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/Raindrops_BGM.wav"));
 	    
