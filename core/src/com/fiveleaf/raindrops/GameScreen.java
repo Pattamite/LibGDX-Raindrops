@@ -147,7 +147,7 @@ public class GameScreen extends ScreenAdapter{
 	    }
 	}
 	private void spawnRaindrops(){
-	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 30000000 - Math.abs(60000 * rainDropsCount)) {
+	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 30000000 - Math.abs(100000 * Math.sqrt(rainDropsCount * 90))) {
 	        rainDropsCount = rainDropsCount + 1;
 	        rainDrop.spawnRaindrop();
 	        lastDropTime = TimeUtils.nanoTime();
