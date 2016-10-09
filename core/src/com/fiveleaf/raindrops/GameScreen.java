@@ -28,11 +28,15 @@ public class GameScreen extends ScreenAdapter{
 	private Cacti cacti;
 	private CactiHealthBar cactiHealthBar;
 	private ScoreText scoreText;
+	private WaterLevel water;
 	private long lastDropTime;
 	private int cactiCounter;
 	private int fertilizerCount = 0;
 	public int score;
 	public int heart;
+	public int rainDropsCount = 0;
+	public int lastWaterLevel = 0;
+	public static int MAX_WATERLEVEL = 60;
 	public static int SCORE_UMBRELLA = 1;
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
@@ -46,13 +50,14 @@ public class GameScreen extends ScreenAdapter{
 		cacti = new Cacti(this.raindropsGame, this);
 		cactiHealthBar = new CactiHealthBar(cacti, this);
 		scoreText = new ScoreText(this.raindropsGame, this);
-	    //Sound
-	    	//rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
-	    	//rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
-	    	//raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("raindrops.mp3"));
-	    //Background Music
-	    	//raindropsMusic.setLooping(true)
-	    	//raindropsMusic.play();
+	    water = new WaterLevel(this.raindropsGame, this);
+	//Sound
+	    //rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
+	    //rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
+	    //raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("raindrops.mp3"));
+	//Background Music
+	    //raindropsMusic.setLooping(true)
+	    //raindropsMusic.play();
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, 160, 144);
 	    rainDrop.spawnRaindrop();
@@ -71,17 +76,30 @@ public class GameScreen extends ScreenAdapter{
 	    spawnRaindrops();
 	    checkRainDrops();
 	    checkFertilizer();
+	    waterControl();
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
 	    umbrella.draw();
 	    rainDrop.draw();
 	    cacti.draw();
+	    water.draw();
 	    fertilizer.draw();
 	    cactiHealthBar.draw();
 	    scoreText.draw();
 	    batch.end();  
 	}
-	
+	private void waterControl() {
+	    if(water.getWaterLevel() > Cacti.STARTING_Y + 16 && water.getWaterLevel() != lastWaterLevel && water.getWaterLevel() < MAX_WATERLEVEL){
+	        Iterator<Rectangle> iterCacti = cacti.cactiRectangle.iterator();
+            cactiCounter = 0;
+            while(iterCacti.hasNext()) {
+                Rectangle cactus = iterCacti.next();
+                cactus.y = cactus.getY() + 1;
+                cactiCounter++;
+            }
+            lastWaterLevel = water.getWaterLevel();
+	    }
+	}
 	private void controlUmbrella()
 	{
 	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -101,16 +119,15 @@ public class GameScreen extends ScreenAdapter{
 	        }
 	    }
 	}
-	
 	private void spawnRaindrops()
 	{
 	    if(TimeUtils.nanoTime() - lastDropTime > 300000000) {
-	           rainDrop.spawnRaindrop();
-	           lastDropTime = TimeUtils.nanoTime();
-	           //rainToCactiSound.play();
+	        rainDropsCount = rainDropsCount + 1;
+	        rainDrop.spawnRaindrop();
+	        lastDropTime = TimeUtils.nanoTime();
+	        //rainToCactiSound.play();
 	    }
 	}
-	
 	private void checkRainDrops()
 	{
 	    Iterator<Rectangle> iterRaindrop = rainDrop.raindropsRactangle.iterator(); 
