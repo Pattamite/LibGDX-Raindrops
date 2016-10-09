@@ -31,6 +31,7 @@ public class GameScreen extends ScreenAdapter{
 	private ScoreText scoreText;
 	private WaterLevel water;
 	private HeartText heartText;
+	private FertBar fertBar;
 	
 	private long lastDropTime;
 	private long lastMoveTime;
@@ -68,6 +69,7 @@ public class GameScreen extends ScreenAdapter{
 		scoreText = new ScoreText(this.raindropsGame, this);
 	    water = new WaterLevel(this.raindropsGame, this);
 	    heartText = new HeartText(this.raindropsGame, this);
+	    fertBar  = new FertBar(umbrella, this);
 	    
 	    rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusRainHit.wav"));
 	    fertToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusFertHit.wav"));
@@ -105,6 +107,7 @@ public class GameScreen extends ScreenAdapter{
 	    cactiHealthBar.draw();
 	    scoreText.draw();
 	    heartText.draw();
+	    fertBar.draw(delta);
 	    batch.end();  
 	}
 	
@@ -136,15 +139,15 @@ public class GameScreen extends ScreenAdapter{
 	        }
 	    }
 	    if((Gdx.input.isKeyPressed(Input.Keys.DOWN )|| Gdx.input.isKeyPressed(Input.Keys.S))) {
-	        if((fertilizerCount == 0) && (this.score > FERTILIZER_COST)) {
-	            this.score = this.score - FERTILIZER_COST;
+	        if((fertilizerCount == 0) && (fertBar.iscanDrop())) {
+	        	fertBar.dropFert();
 	            fertilizer.spawnFertilizer(umbrella.umbrellaRactangle.getX());
 	            fertilizerCount = fertilizerCount + 1;
 	        }
 	    }
 	}
 	private void spawnRaindrops(){
-	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 30000000 - Math.abs(100000 * rainDropsCount)) {
+	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 30000000 - Math.abs(60000 * rainDropsCount)) {
 	        rainDropsCount = rainDropsCount + 1;
 	        rainDrop.spawnRaindrop();
 	        lastDropTime = TimeUtils.nanoTime();

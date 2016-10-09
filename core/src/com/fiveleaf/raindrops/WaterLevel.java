@@ -21,7 +21,7 @@ public class WaterLevel {
     }
     
     public int getWaterLevel () {
-        int level = gameScreen.rainDropsCount / 2;
+        int level = gameScreen.rainDropsCount / 3;
         if(level > gameScreen.MAX_WATERLEVEL){
             return gameScreen.MAX_WATERLEVEL;
         }
