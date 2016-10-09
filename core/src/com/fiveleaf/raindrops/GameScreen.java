@@ -224,6 +224,7 @@ public class GameScreen extends ScreenAdapter{
 	}
 	
 	private void gameOver(){
+		raindropsMusic.stop();
 		raindropsGame.GameOver(this.score);
 	}
 }
