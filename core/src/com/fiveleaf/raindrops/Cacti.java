@@ -116,22 +116,7 @@ public class Cacti {
 	
 	public void fertHit(int target)
 	{
-		if(false) // DebugCheck
-		//if(cactusStatus[target] == STATUS_NORMAL || cactusStatus[target] == STATUS_NEEDRAIN) // RealGameCheck
-		{
-			cactusHealth[target] = healthCheck(cactusHealth[target] - 1);
-			if(cactusHealth[target] <= 0)
-			{
-				cactusDead(target);
-			}
-		}
-		else // DebugCheck
-		//else if(cactusStatus[target] == STATUS_NEEDFERT)
-		{
-			needFert[target] = 0;
 			cactusHealth[target] = healthCheck(cactusHealth[target] + 3);
-			setStatus(target, STATUS_NORMAL, 0);
-		}
 	}
 	
 	private void cactusDead(int target)
