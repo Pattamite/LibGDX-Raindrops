@@ -17,7 +17,8 @@ public class GameScreen extends ScreenAdapter{
 	private OrthographicCamera camera;
 	
 	private Sound rainToCactiSound;
-	private Sound rainToUmbrellaSound;
+	private Sound fertToCactiSound;
+	private Sound cactusDeadSound;
 	private Music raindropsMusic;
 	
 	public SpriteBatch batch;
@@ -46,6 +47,11 @@ public class GameScreen extends ScreenAdapter{
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
 	public static int SCORE_NEEDFERT = 0;
 	
+	private float rainToCactiSoundVolume = 0.35f;
+	private float fertToCactiSoundVolume = 1.0f;
+	private float cactusDeadSoundVolume = 1.0f;
+	private float raindropsMusicVolume = 1.0f;
+	
 	public GameScreen(RaindropsGame raindropsGame) {
 		this.raindropsGame = raindropsGame;
 		this.batch = raindropsGame.batch;
@@ -57,13 +63,16 @@ public class GameScreen extends ScreenAdapter{
 		scoreText = new ScoreText(this.raindropsGame, this);
 	    water = new WaterLevel(this.raindropsGame, this);
 	    heartText = new HeartText(this.raindropsGame, this);
-	//Sound
-	    //rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
-	    //rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
-	    //raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("raindrops.mp3"));
-	//Background Music
-	    //raindropsMusic.setLooping(true)
-	    //raindropsMusic.play();
+	    
+	    rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("CactusRainHit.wav"));
+	    fertToCactiSound = Gdx.audio.newSound(Gdx.files.internal("CactusFertHit.wav"));
+	    cactusDeadSound = Gdx.audio.newSound(Gdx.files.internal("cactusDead.wav"));
+	    
+	    raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("Raindrops_BGM.wav"));
+	    
+	    raindropsMusic.setLooping(true);
+	    raindropsMusic.setVolume(raindropsMusicVolume);
+	    raindropsMusic.play();
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, 160, 144);
 	    rainDrop.spawnRaindrop();
@@ -173,7 +182,7 @@ public class GameScreen extends ScreenAdapter{
 	            while(iterCacti.hasNext()) {
 	                Rectangle cactus = iterCacti.next();
 	                if(raindrop.overlaps(cactus)) {
-	                    //rainToCactiSound.play();
+	                	rainToCactiSound.play(rainToCactiSoundVolume);
 	                    iterRaindrop.remove();
 	                    cacti.rainHit(cactiCounter);
 	                    break;
