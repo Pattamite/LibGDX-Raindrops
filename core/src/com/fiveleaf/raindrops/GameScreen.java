@@ -39,8 +39,9 @@ public class GameScreen extends ScreenAdapter{
 	public int heart = 9;
 	public int rainDropsCount = 0;
 	public int lastWaterLevel = 0;
+	public int[] moveTarget = {0, 0, 0};
 	
-	public static int MAX_WATERLEVEL = 55 + 10;
+	public static int MAX_WATERLEVEL = 75;
 	public static int SCORE_UMBRELLA = 1;
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
@@ -129,7 +130,7 @@ public class GameScreen extends ScreenAdapter{
 	    }
 	}
 	private void spawnRaindrops(){
-	    if(TimeUtils.nanoTime() - lastDropTime > 300000000) {
+	    if((TimeUtils.nanoTime() - lastDropTime)/10 > 40000000 - (100 * rainDropsCount) || (TimeUtils.nanoTime() - lastDropTime)/10 > 40000000 - (10000 * (rainDropsCount % 5000))) {
 	        rainDropsCount = rainDropsCount + 1;
 	        rainDrop.spawnRaindrop();
 	        lastDropTime = TimeUtils.nanoTime();
@@ -137,19 +138,13 @@ public class GameScreen extends ScreenAdapter{
 	    }
 	}
 	private void cactiFloat(){
-        if(TimeUtils.nanoTime() - lastMoveTime > (500000000)) {
+        if((TimeUtils.nanoTime() - lastMoveTime) / 10 > (50000000)) {
             lastMoveTime = TimeUtils.nanoTime();
             Iterator<Rectangle> iterCacti = cacti.cactiRectangle.iterator();
             cactiCounter = 0;
             while(iterCacti.hasNext()) {
                 Rectangle cactus = iterCacti.next();
-                cactus.x = cactus.getX() + water.moveCactus();
-                if(cactus.getX() < 0){
-                	cactus.x = 0;
-                }
-                else if(cactus.getX() > (160 - 32)){
-                	cactus.x = 160 - 32;
-                }
+                moveTarget[cactiCounter] = water.moveCactus();
                 cactiCounter++;
             }
         }

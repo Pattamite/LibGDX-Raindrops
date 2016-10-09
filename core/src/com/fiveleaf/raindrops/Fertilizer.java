@@ -29,7 +29,7 @@ public class Fertilizer {
 	public void draw()
 	{
 	    if(fertilizer != null){
-            gameScreen.batch.draw(fertilizerImage, fertilizer.x, fertilizer.y);
+            gameScreen.batch.draw(fertilizerImage, (int)fertilizer.x, (int)fertilizer.y);
 	    }
 	}
 }

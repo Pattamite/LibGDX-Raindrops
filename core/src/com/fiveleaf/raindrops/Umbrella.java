@@ -11,6 +11,8 @@ public class Umbrella {
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
 	
+	public static int UMBRELLA_HEIGHT = 56;
+	
 	public Umbrella(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
@@ -18,7 +20,7 @@ public class Umbrella {
 		
 		umbrellaRactangle = new Rectangle();
 	    umbrellaRactangle.x = (160 / 2) - (32 / 2);
-	    umbrellaRactangle.y = 48 + 24;
+	    umbrellaRactangle.y = UMBRELLA_HEIGHT;
 	    umbrellaRactangle.width = 32;
 	    umbrellaRactangle.height = 32;
 	     
@@ -26,6 +28,6 @@ public class Umbrella {
 	}
 	
 	public void draw(){
-		gameScreen.batch.draw(umbrellaImage, umbrellaRactangle.x, umbrellaRactangle.y);
+		gameScreen.batch.draw(umbrellaImage, (int)umbrellaRactangle.x, (int)umbrellaRactangle.y);
 	}
 }

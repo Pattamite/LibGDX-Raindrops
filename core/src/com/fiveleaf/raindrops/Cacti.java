@@ -98,6 +98,22 @@ public class Cacti {
 	public void draw(){
 		counter = 0;
 		for(Rectangle cactus: cactiRectangle) {
+			if(gameScreen.moveTarget != null){
+				if(gameScreen.moveTarget[counter] > 0){
+					cactus.x = cactus.getX() + (20 * Gdx.graphics.getDeltaTime());
+					gameScreen.moveTarget[counter] = gameScreen.moveTarget[counter] - 2;
+				}
+				else if(gameScreen.moveTarget[counter] < 0){
+					cactus.x = cactus.getX() - (20 * Gdx.graphics.getDeltaTime());
+					gameScreen.moveTarget[counter] = gameScreen.moveTarget[counter] + 2;
+				}
+			}
+			if(cactus.getX() < 0){
+				cactus.x = 0;
+			}
+			else if(cactus.getX() > 160 - 32){
+				cactus.x = 160 - 32;
+			}
 			if(cactusStatus[counter] == STATUS_DEAD){
 				if(TimeUtils.millis() - lastDeadTime[counter] > spawnTime){
 						spawnCactus(counter);
@@ -107,7 +123,7 @@ public class Cacti {
 				}
 				
 			}
-			else gameScreen.batch.draw(cactusImage, cactus.x, cactus.y);
+			else gameScreen.batch.draw(cactusImage, (int)cactus.x, (int)cactus.y);
 			counter++;
 		}
     }
