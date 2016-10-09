@@ -13,16 +13,18 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class GameOverScreen extends ScreenAdapter{
 	
 	public SpriteBatch batch;
-	private Music gameOverMusic;
 	private RaindropsGame raindropsGame;
 	private BitmapFont font;
 	private OrthographicCamera camera;
+	
+	private Music gameOverMusic;
+	
 	private long blinkFreq = 200;
 	private boolean isBlinking = true;
 	private long lastBlink;
 	
-	public GameOverScreen(RaindropsGame raindropsGame)
-	{
+	
+	public GameOverScreen(RaindropsGame raindropsGame){
 		this.batch = raindropsGame.batch;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 160, 144);
@@ -32,8 +34,7 @@ public class GameOverScreen extends ScreenAdapter{
 	}
 	
 	@Override
-	public void render(float delta)
-	{
+	public void render(float delta){
 		Gdx.gl.glClearColor(0.6055f, 0.7344f, 0.0586f, 1.0f);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	    camera.update();
@@ -48,7 +49,6 @@ public class GameOverScreen extends ScreenAdapter{
 			Blinking();
 			if(isBlinking)font.draw(raindropsGame.batch, "!! New High Score !!"  ,10 , 65);
 		}
-		
 		font.draw(raindropsGame.batch, "Press Spacebar",26 ,45);
 		font.draw(raindropsGame.batch, "To replay",47 ,35);
 		batch.end();
@@ -56,19 +56,15 @@ public class GameOverScreen extends ScreenAdapter{
 		CheckInput();
 	}
 	
-	private void Blinking()
-	{
-		if(TimeUtils.millis() - lastBlink > blinkFreq)
-		{
+	private void Blinking(){
+		if(TimeUtils.millis() - lastBlink > blinkFreq){
 			lastBlink = TimeUtils.millis();
 			isBlinking = !isBlinking;
 		}
 	}
 	
-	private void CheckInput()
-	{
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
-		{
+	private void CheckInput(){
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
 			raindropsGame.PlayAgain();
 		}
 	}

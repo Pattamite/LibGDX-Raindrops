@@ -9,15 +9,13 @@ public class ScoreText {
 	private BitmapFont font;
 	
 	
-	public ScoreText(RaindropsGame raindropsGame, GameScreen gameScreen)
-	{
+	public ScoreText(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
 		font = new BitmapFont(Gdx.files.internal("GameBoy_S10.fnt"));
 	}
 	
-	public void draw()
-	{
+	public void draw(){
 		font.setColor(15, 56, 15, 1);
 		font.draw(gameScreen.batch, "Score : " + gameScreen.score , 2, 7);
 	}

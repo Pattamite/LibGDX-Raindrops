@@ -30,6 +30,7 @@ public class GameScreen extends ScreenAdapter{
 	private ScoreText scoreText;
 	private WaterLevel water;
 	private HeartText heartText;
+	
 	private long lastDropTime;
 	private long lastMoveTime;
 	private int cactiCounter;
@@ -38,11 +39,13 @@ public class GameScreen extends ScreenAdapter{
 	public int heart = 9;
 	public int rainDropsCount = 0;
 	public int lastWaterLevel = 0;
+	
 	public static int MAX_WATERLEVEL = 55 + 10;
 	public static int SCORE_UMBRELLA = 1;
 	public static int SCORE_NEEDRAINEACH = 10;
 	public static int SCORE_NEEDRAINCOMPLETE = 100;
 	public static int SCORE_NEEDFERT = 50;
+	
 	public GameScreen(RaindropsGame raindropsGame) {
 		this.raindropsGame = raindropsGame;
 		this.batch = raindropsGame.batch;
@@ -67,16 +70,17 @@ public class GameScreen extends ScreenAdapter{
 	}
 	
 	@Override
-	public void render(float delta)
-	{
+	public void render(float delta){
 	    Gdx.gl.glClearColor(0.6055f, 0.7344f, 0.0586f, 1.0f);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	    
 		camera.update();
 		controlUmbrella();
 	    spawnRaindrops();
 	    checkRainDrops();
 	    checkFertilizer();
 	    waterControl();
+	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
 	    umbrella.draw();
@@ -89,6 +93,7 @@ public class GameScreen extends ScreenAdapter{
 	    heartText.draw();
 	    batch.end();  
 	}
+	
 	private void waterControl() {
 	    if(water.getWaterLevel() > Cacti.STARTING_Y + 16 && water.getWaterLevel() != lastWaterLevel && water.getWaterLevel() < MAX_WATERLEVEL){
 	        Iterator<Rectangle> iterCacti = cacti.cactiRectangle.iterator();
@@ -105,8 +110,7 @@ public class GameScreen extends ScreenAdapter{
 	        cactiFloat();
 	    }
 	}
-	private void controlUmbrella()
-	{
+	private void controlUmbrella(){
 	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 	        if(umbrella.umbrellaRactangle.getX() > 0) {
 	            umbrella.umbrellaRactangle.x = umbrella.umbrellaRactangle.getX() - 3;
@@ -124,8 +128,7 @@ public class GameScreen extends ScreenAdapter{
 	        }
 	    }
 	}
-	private void spawnRaindrops()
-	{
+	private void spawnRaindrops(){
 	    if(TimeUtils.nanoTime() - lastDropTime > 300000000) {
 	        rainDropsCount = rainDropsCount + 1;
 	        rainDrop.spawnRaindrop();
@@ -151,8 +154,7 @@ public class GameScreen extends ScreenAdapter{
             }
         }
     }
-	private void checkRainDrops()
-	{
+	private void checkRainDrops(){
 	    Iterator<Rectangle> iterRaindrop = rainDrop.raindropsRactangle.iterator(); 
 	    while(iterRaindrop.hasNext()) {
 	        Rectangle raindrop = iterRaindrop.next();
@@ -181,8 +183,7 @@ public class GameScreen extends ScreenAdapter{
 	        }
 	    }
 	}
-	private void checkFertilizer()
-	{
+	private void checkFertilizer(){
 	    if(fertilizer.fertilizer != null) {
 	        Rectangle targetFertilizer = fertilizer.fertilizer;
 	        targetFertilizer.y = targetFertilizer.getY() - (50 * Gdx.graphics.getDeltaTime());
@@ -207,20 +208,17 @@ public class GameScreen extends ScreenAdapter{
 	        }
 	    }
 	}
-	public void addScore(int value)
-	{
+	public void addScore(int value){
 		score += value;
 	}
 	
-	public void cactusDead()
-	{
+	public void cactusDead(){
 		heart--;
 		if(heart <= 0) gameOver();
 		
 	}
 	
-	private void gameOver()
-	{
+	private void gameOver(){
 		raindropsGame.GameOver(this.score);
 	}
 }

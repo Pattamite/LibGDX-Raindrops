@@ -2,22 +2,19 @@ package com.fiveleaf.raindrops;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 public class CactiHealthBar {
-	private Texture healthBar;
-	private Texture remainHealth;
-	
 	private Cacti cacti;
 	private GameScreen gameScreen;
+	
+	private Texture healthBar;
+	private Texture remainHealth;
 	
 	private int counter;
 	private float yPositionOffset;
 	private int tempHealth;
 	
-	public CactiHealthBar( Cacti cacti, GameScreen gameScreen)
-	{
+	public CactiHealthBar( Cacti cacti, GameScreen gameScreen){
 		this.cacti = cacti;
 		this.gameScreen = gameScreen;
 		
@@ -27,10 +24,8 @@ public class CactiHealthBar {
 		yPositionOffset = -19f;
 	}
 	
-	public void draw()
-	{
-		for(counter = 0; counter < 3 ; counter++)
-		{
+	public void draw(){
+		for(counter = 0; counter < 3 ; counter++){
 			tempHealth = cacti.cactusHealth[counter];
 			if(tempHealth < 0) tempHealth = 0;
 			else if(tempHealth > cacti.cactusMaxHealth) tempHealth = cacti.cactusMaxHealth;

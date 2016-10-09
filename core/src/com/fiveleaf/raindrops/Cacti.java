@@ -10,29 +10,32 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Cacti {
 	
 	public static int STATUS_NORMAL = 0;
-	public static int STATUS_NEEDRAIN = 1;
-	public static int STATUS_NEEDFERT = 2;
-	public static int STATUS_INVINCIBLE = -1;
+	//public static int STATUS_NEEDRAIN = 1;
+	//public static int STATUS_NEEDFERT = 2;
+	//public static int STATUS_INVINCIBLE = -1;
 	public static int STATUS_DEAD = -2;
-	
 	public static int STARTING_Y = 16;
 	
-	private Texture cactusImage;
-	private long spawnTime = 5000;
+	
+	private RaindropsGame raindropsGame;
+	private GameScreen gameScreen;
+	
 	public Array<Rectangle> cactiRectangle;
+	private Texture cactusImage;
+	private BitmapFont font;
+	
 	public int cactusStatus[];
 	public int cactusHealth[];
 	public int needRain[];
 	public int needFert[];
 	private long lastDeadTime[];
-	private RaindropsGame raindropsGame;
-	private GameScreen gameScreen;
+	
+	private long spawnTime = 5000;
 	public int cactusMaxHealth = 5;
 	private int counter;
-	private BitmapFont font;
 	
-	public Cacti(RaindropsGame raindropsGame, GameScreen gameScreen)
-	{
+	
+	public Cacti(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
 		cactusImage = new Texture(Gdx.files.internal("Raindrops_Cactus.png"));
@@ -44,8 +47,7 @@ public class Cacti {
 		placeCacti();
 	}
 	
-	private void setUpArray()
-	{
+	private void setUpArray(){
 		cactusHealth = new int[3];
 		cactusHealth[0] = cactusMaxHealth;
 		cactusHealth[1] = cactusMaxHealth;
@@ -71,17 +73,20 @@ public class Cacti {
 	
 	private void placeCacti() {
 	    Rectangle cactus = new Rectangle();
+	    
 	    cactus.x = (160 / 2) - (52 + 16);
 	    cactus.y = STARTING_Y;
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
+	    
 	    cactus = new Rectangle();
 	    cactus.x = (160 / 2) - (32 / 2);
 	    cactus.y = STARTING_Y;
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
+	    
 	    cactus = new Rectangle();
 	    cactus.x = (160 / 2) + (52 - 16);
 	    cactus.y = STARTING_Y;
@@ -90,19 +95,14 @@ public class Cacti {
 	    cactiRectangle.add(cactus);       
 	 }
 	
-	public void draw()
-	{
+	public void draw(){
 		counter = 0;
 		for(Rectangle cactus: cactiRectangle) {
-			if(cactusStatus[counter] == STATUS_DEAD)
-			{
-				if(TimeUtils.millis() - lastDeadTime[counter] > spawnTime)
-				{
+			if(cactusStatus[counter] == STATUS_DEAD){
+				if(TimeUtils.millis() - lastDeadTime[counter] > spawnTime){
 						spawnCactus(counter);
 				}
-				else 
-				{
-					
+				else {
 					printSpawnTime(counter);
 				}
 				
@@ -110,22 +110,16 @@ public class Cacti {
 			else gameScreen.batch.draw(cactusImage, cactus.x, cactus.y);
 			counter++;
 		}
-		
     }
 	
-	public void rainHit(int target)
-	{
-		if(cactusStatus[target] == STATUS_NORMAL)
-		{
-			
+	public void rainHit(int target){
+		if(cactusStatus[target] == STATUS_NORMAL){
 			cactusHealth[target] = healthCheck(cactusHealth[target] - 1);
-			if(cactusHealth[target] <= 0)
-			{
+			if(cactusHealth[target] <= 0){
 				cactusDead(target);
 			}
 		}
-		/*else if(cactusStatus[target] == STATUS_NEEDRAIN)
-		{
+		/*else if(cactusStatus[target] == STATUS_NEEDRAIN){
 			needRain[target]--;
 			if(needRain[target] <= 0)
 			{
@@ -134,31 +128,28 @@ public class Cacti {
 		}*/
 	}
 	
-	public void fertHit(int target)
-	{
-			cactusHealth[target] = healthCheck(cactusHealth[target] + 3);
+	public void fertHit(int target){
+		cactusHealth[target] = healthCheck(cactusHealth[target] + 3);
 	}
 	
-	private void cactusDead(int target)
-	{
-		
+	private void cactusDead(int target){
 		cactusStatus[target] = STATUS_DEAD;
+		
 		cactiRectangle.get(target).width = 0;
 		cactiRectangle.get(target).height = 0;
 		cactiRectangle.get(target).y -= 200;
+		
 		lastDeadTime[target] = TimeUtils.millis();
+		
 		gameScreen.cactusDead();
 	}
 	
-	public void setStatus(int target, int status, int value)
-	{
-		if(cactusStatus[target] != STATUS_DEAD)
-		{
+	public void setStatus(int target, int status, int value){
+		if(cactusStatus[target] != STATUS_DEAD){
 			cactusStatus[target] = status;
 			//if(status == STATUS_NEEDRAIN) setNeedRain(target, value);
 			//else if(status == STATUS_NEEDFERT) setNeedFert(target, value);
-		}
-		
+		}	
 	}
 	public int healthCheck(int health){
 		if(health > cactusMaxHealth){
@@ -172,8 +163,7 @@ public class Cacti {
 		}
 	}
 	
-	private void spawnCactus(int target)
-	{
+	private void spawnCactus(int target){
 		cactusStatus[target] = STATUS_NORMAL;
 		cactusHealth[target] = cactusMaxHealth;
 		cactiRectangle.get(target).width = 32;
@@ -184,14 +174,12 @@ public class Cacti {
 		
 	}
 	
-	private void printSpawnTime(int target)
-	{
+	private void printSpawnTime(int target){
 		font.setColor(15, 56, 15, 1);
 		font.draw(gameScreen.batch, "" + ((spawnTime -  (TimeUtils.millis() - lastDeadTime[counter]))/1000 + 1 ), cactiRectangle.get(target).x + 16, cactiRectangle.get(target).y + 200 + 16);
 	}
 	
-	/*public void setNeedRain(int target, int value)
-	{
+	/*public void setNeedRain(int target, int value){
 		if(cactusStatus[target] == STATUS_NEEDRAIN)
 		{
 			needRain[target] = value;
@@ -202,8 +190,7 @@ public class Cacti {
 		}
 	}
 	
-	public void setNeedFert(int target, int value)
-	{
+	public void setNeedFert(int target, int value){
 		if(cactusStatus[target] == STATUS_NEEDFERT)
 		{
 			needFert[target] = value;

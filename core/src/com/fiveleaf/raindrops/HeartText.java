@@ -10,16 +10,14 @@ public class HeartText {
 	private BitmapFont font;
 	private Texture heartImg;
 	
-	public HeartText(RaindropsGame raindropsGame, GameScreen gameScreen)
-	{
+	public HeartText(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
 		font = new BitmapFont(Gdx.files.internal("GameBoy_S10.fnt"));
 		heartImg = new Texture(Gdx.files.internal("Heart.png"));
 	}
 	
-	public void draw()
-	{
+	public void draw(){
 		font.setColor(15, 56, 15, 1);
 		font.draw(gameScreen.batch, "x " + gameScreen.heart , 140, 7);
 		gameScreen.batch.draw(heartImg, 125, 0);

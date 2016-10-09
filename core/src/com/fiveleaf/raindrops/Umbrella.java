@@ -11,8 +11,7 @@ public class Umbrella {
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
 	
-	public Umbrella(RaindropsGame raindropsGame, GameScreen gameScreen)
-	{
+	public Umbrella(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
 		umbrellaImage = new Texture(Gdx.files.internal("Raindrops_Umbrella.png"));
@@ -26,8 +25,7 @@ public class Umbrella {
 	    umbrellaPosition = 2;
 	}
 	
-	public void draw()
-	{
+	public void draw(){
 		gameScreen.batch.draw(umbrellaImage, umbrellaRactangle.x, umbrellaRactangle.y);
 	}
 }

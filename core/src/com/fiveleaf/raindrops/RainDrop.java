@@ -7,17 +7,18 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 public class RainDrop {
-	private Texture rainDropImage;
-	public Array<Rectangle> raindropsRactangle;
 	private RaindropsGame raindropsGame;
 	private GameScreen gameScreen;
+	
+	private Texture rainDropImage;
+	public Array<Rectangle> raindropsRactangle;
+	
 	private float randomPosition;
 	private int lastPosition;
 	private int streak = 0;
 	private int maxStreak = 3;
 	
-	public RainDrop(RaindropsGame raindropsGame, GameScreen gameScreen)
-	{
+	public RainDrop(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
 		rainDropImage = new Texture(Gdx.files.internal("Raindrops_Rain.png"));
@@ -34,87 +35,68 @@ public class RainDrop {
 	    raindrop.height = 8;
 	    raindropsRactangle.add(raindrop);
 	 }
-	public void draw()
-	{
+	public void draw(){
 		for(Rectangle raindrop: raindropsRactangle) {
             gameScreen.batch.draw(rainDropImage, raindrop.x, raindrop.y);
         }
 	}
 	
-	private float randomCactiPosition()
-	{
+	private float randomCactiPosition(){
 		float position = MathUtils.random(0, 3);
-		if(position < 1f)
-		{
+		if(position < 1f){
 			if(lastPosition == 1) streak++;
 			else streak = 1;
-			if(streak < maxStreak)
-			{
+			if(streak < maxStreak){
 				lastPosition = 1;
 				return 12f;
 			}
-			else
-			{
-				if(position < 0.5f)
-				{
+			else{
+				if(position < 0.5f){
 					streak = 1;
 					lastPosition = 2;
 					return 64f;
 				}
-				else
-				{
+				else{
 					streak = 1;
 					lastPosition = 3;
 					return 116f;
 				}
 			}
-			
 		}
-		else if(position < 2f)
-		{
+		else if(position < 2f){
 			if(lastPosition == 2) streak++;
 			else streak = 1;
-			if(streak < maxStreak)
-			{
+			if(streak < maxStreak){
 				lastPosition = 2;
 				return 64f;
 			}
-			else
-			{
-				if(position < 1.5f)
-				{
+			else{
+				if(position < 1.5f){
 					streak = 1;
 					lastPosition = 1;
 					return 12f;
 				}
-				else
-				{
+				else{
 					streak = 1;
 					lastPosition = 3;
 					return 116f;
 				}
 			}
-			
 		}
-		else
-		{
+		else{
 			if(lastPosition == 3) streak++;
 			else streak = 1;
-			if(streak < maxStreak)
-			{
+			if(streak < maxStreak){
 				lastPosition = 3;
 				return 116f;
 			}
-			else
-			{
-				if(position < 2.5f)
-				{
+			else{
+				if(position < 2.5f){
 					streak = 1;
 					lastPosition = 1;
 					return 12f;
 				}
-				else
-				{
+				else{
 					streak = 1;
 					lastPosition = 2;
 					return 64f;
