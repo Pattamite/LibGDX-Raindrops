@@ -48,8 +48,8 @@ public class GameScreen extends ScreenAdapter{
 	public static int SCORE_NEEDFERT = 0;
 	
 	private float rainToCactiSoundVolume = 0.35f;
-	private float fertToCactiSoundVolume = 1.0f;
-	private float cactusDeadSoundVolume = 1.0f;
+	private float fertToCactiSoundVolume = 0.8f;
+	private float cactusDeadSoundVolume = 0.6f;
 	private float raindropsMusicVolume = 1.0f;
 	
 	public GameScreen(RaindropsGame raindropsGame) {
@@ -64,11 +64,11 @@ public class GameScreen extends ScreenAdapter{
 	    water = new WaterLevel(this.raindropsGame, this);
 	    heartText = new HeartText(this.raindropsGame, this);
 	    
-	    rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("CactusRainHit.wav"));
-	    fertToCactiSound = Gdx.audio.newSound(Gdx.files.internal("CactusFertHit.wav"));
-	    cactusDeadSound = Gdx.audio.newSound(Gdx.files.internal("cactusDead.wav"));
+	    rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusRainHit.wav"));
+	    fertToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusFertHit.wav"));
+	    cactusDeadSound = Gdx.audio.newSound(Gdx.files.internal("assets/cactusDead.wav"));
 	    
-	    raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("Raindrops_BGM.wav"));
+	    raindropsMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/Raindrops_BGM.wav"));
 	    
 	    raindropsMusic.setLooping(true);
 	    raindropsMusic.setVolume(raindropsMusicVolume);

@@ -38,9 +38,9 @@ public class Cacti {
 	public Cacti(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		cactusImage = new Texture(Gdx.files.internal("Raindrops_Cactus.png"));
+		cactusImage = new Texture(Gdx.files.internal("assets/Raindrops_Cactus.png"));
 		cactiRectangle = new Array<Rectangle>();
-		font = new BitmapFont(Gdx.files.internal("GameBoy_S10.fnt"));
+		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
 		
 		
 		setUpArray();

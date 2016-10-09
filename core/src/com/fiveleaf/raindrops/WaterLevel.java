@@ -13,7 +13,7 @@ public class WaterLevel {
     public WaterLevel (RaindropsGame raindropsGame, GameScreen gameScreen) {
         this.raindropsGame = raindropsGame;
         this.gameScreen = gameScreen;
-        waterTexture = new Texture(Gdx.files.internal("Raindrops_WaterTexture.png"));
+        waterTexture = new Texture(Gdx.files.internal("assets/Raindrops_WaterTexture.png"));
     }
     
     public int getWaterLevel () {
