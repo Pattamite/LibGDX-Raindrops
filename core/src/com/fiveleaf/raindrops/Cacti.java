@@ -23,7 +23,6 @@ public class Cacti {
 	public int needFert[];
 	private long lastDeadTime[];
 	private long spawnTime = 5000;
-	private float xPosition[];
 	private float yPosition;
 	
 	private RaindropsGame raindropsGame;
@@ -68,29 +67,24 @@ public class Cacti {
 		
 		lastDeadTime = new long[3];
 		
-		xPosition = new float[3];
-		xPosition[0] = (160 / 2) - (52 + 16);
-		xPosition[1] = (160 / 2) - (32 / 2);
-		xPosition[2] = (160 / 2) + (52 - 16);
-		
 		yPosition = 32 - (32 / 2);
 	}
 	
 	private void placeCacti() {
 	    Rectangle cactus = new Rectangle();
-	    cactus.x = xPosition[0];
+	    cactus.x = (160 / 2) - (52 + 16);
 	    cactus.y = yPosition;
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
 	    cactus = new Rectangle();
-	    cactus.x = xPosition[1];
+	    cactus.x = (160 / 2) - (32 / 2);
 	    cactus.y = yPosition;
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
 	    cactus = new Rectangle();
-	    cactus.x = xPosition[2];
+	    cactus.x = (160 / 2) + (52 - 16);
 	    cactus.y = yPosition;
 	    cactus.width = 32;
 	    cactus.height = 32;
@@ -137,8 +131,7 @@ public class Cacti {
 		cactusStatus[target] = STATUS_DEAD;
 		cactiRectangle.get(target).width = 0;
 		cactiRectangle.get(target).height = 0;
-		cactiRectangle.get(target).x = -1;
-		cactiRectangle.get(target).y = -1;
+		cactiRectangle.get(target).y -= 200;
 		lastDeadTime[target] = TimeUtils.millis();
 		gameScreen.cactusDead();
 	}
@@ -171,15 +164,14 @@ public class Cacti {
 		cactiRectangle.get(target).width = 32;
 		cactiRectangle.get(target).height = 32;
 		
-		cactiRectangle.get(target).x = xPosition[target];
-		cactiRectangle.get(target).y = yPosition;
+		cactiRectangle.get(target).x = (160 / 2) - (52 + 16);
 		
 	}
 	
 	private void printSpawnTime(int target)
 	{
 		font.setColor(15, 56, 15, 1);
-		font.draw(gameScreen.batch, "" + ((spawnTime -  (TimeUtils.millis() - lastDeadTime[counter]))/1000 + 1 ), xPosition[target] + 16, yPosition + 16);
+		font.draw(gameScreen.batch, "" + ((spawnTime -  (TimeUtils.millis() - lastDeadTime[counter]))/1000 + 1 ), cactiRectangle.get(target).x + 16, cactiRectangle.get(target).y + 200 + 16);
 	}
 	/*public void setNeedRain(int target, int value)
 	{
