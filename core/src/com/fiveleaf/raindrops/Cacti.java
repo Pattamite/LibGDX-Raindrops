@@ -62,19 +62,19 @@ public class Cacti {
 	private void placeCacti() {
 	    Rectangle cactus = new Rectangle();
 	    cactus.x = (160 / 2) - (52 + 16);
-	    cactus.y = 48 - (32 / 2);
+	    cactus.y = 32 - (32 / 2);
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
 	    cactus = new Rectangle();
 	    cactus.x = (160 / 2) - (32 / 2);
-	    cactus.y = 48 - (32 / 2);
+	    cactus.y = 32 - (32 / 2);
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);
 	    cactus = new Rectangle();
 	    cactus.x = (160 / 2) + (52 - 16);
-	    cactus.y = 48 - (32 / 2);
+	    cactus.y = 32 - (32 / 2);
 	    cactus.width = 32;
 	    cactus.height = 32;
 	    cactiRectangle.add(cactus);       
@@ -112,6 +112,26 @@ public class Cacti {
 		}
 	}
 	
+	public void fertHit(int target)
+	{
+		if(false) // DebugCheck
+		//if(cactusStatus[target] == STATUS_NORMAL || cactusStatus[target] == STATUS_NEEDRAIN) // RealGameCheck
+		{
+			cactusHealth[target] = healthCheck(cactusHealth[target] - 1);
+			if(cactusHealth[target] <= 0)
+			{
+				cactusDead(target);
+			}
+		}
+		else // DebugCheck
+		//else if(cactusStatus[target] == STATUS_NEEDFERT)
+		{
+			needFert[target] = 0;
+			cactusHealth[target] = healthCheck(cactusHealth[target] + 3);
+			setStatus(target, STATUS_NORMAL, 0);
+		}
+	}
+	
 	private void cactusDead(int target)
 	{
 		cactusStatus[target] = STATUS_DEAD;
@@ -130,6 +150,17 @@ public class Cacti {
 			else if(status == STATUS_NEEDFERT) setNeedFert(target, value);
 		}
 		
+	}
+	public int healthCheck(int health){
+		if(health > cactusMaxHealth){
+			return cactusMaxHealth;
+		}
+		else if(health <= 0){
+			return -10;
+		}
+		else {
+			return health;
+		}
 	}
 	
 	public void setNeedRain(int target, int value)
