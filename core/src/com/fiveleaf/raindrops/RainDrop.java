@@ -55,8 +55,7 @@ public class RainDrop {
 			}
 			else
 			{
-				position = MathUtils.random(0, 2);
-				if(position < 1)
+				if(position < 0.5f)
 				{
 					streak = 1;
 					lastPosition = 2;
@@ -82,8 +81,7 @@ public class RainDrop {
 			}
 			else
 			{
-				position = MathUtils.random(0, 2);
-				if(position < 1)
+				if(position < 1.5f)
 				{
 					streak = 1;
 					lastPosition = 1;
@@ -109,8 +107,7 @@ public class RainDrop {
 			}
 			else
 			{
-				position = MathUtils.random(0, 2);
-				if(position < 1)
+				if(position < 2.5f)
 				{
 					streak = 1;
 					lastPosition = 1;
