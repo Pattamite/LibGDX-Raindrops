@@ -28,6 +28,7 @@ public class GameScreen extends ScreenAdapter{
 	private Cacti cacti;
 	private CactiHealthBar cactiHealthBar;
 	private ScoreText scoreText;
+	private HeartText heartText;
 	private long lastDropTime;
 	private int cactiCounter;
 	private int fertilizerCount = 0;
@@ -46,6 +47,7 @@ public class GameScreen extends ScreenAdapter{
 		cacti = new Cacti(this.raindropsGame, this);
 		cactiHealthBar = new CactiHealthBar(cacti, this);
 		scoreText = new ScoreText(this.raindropsGame, this);
+		heartText=  new HeartText(this.raindropsGame, this);
 	    //Sound
 	    	//rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("drop_on_cacti.wav"));
 	    	//rainToUmbrellaSound = Gdx.audio.newSound(Gdx.files.internal("rain.wav"));
@@ -79,6 +81,7 @@ public class GameScreen extends ScreenAdapter{
 	    fertilizer.draw();
 	    cactiHealthBar.draw();
 	    scoreText.draw();
+	    heartText.draw();
 	    batch.end();  
 	}
 	
@@ -169,5 +172,12 @@ public class GameScreen extends ScreenAdapter{
 	public void addScore(int value)
 	{
 		score += value;
+	}
+	
+	public void cactusDead()
+	{
+		heart--;
+		//if(heart <= ) gameover();
+		
 	}
 }
