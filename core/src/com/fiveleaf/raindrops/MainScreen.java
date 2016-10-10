@@ -35,7 +35,7 @@ public class MainScreen extends ScreenAdapter{
 	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
-	    font.draw(raindropsGame.batch, "Raindrops Keep ", 27, 130);
+	    font.draw(raindropsGame.batch, "Raindrops Keep", 27, 130);
 	    font.draw(raindropsGame.batch, "Fallin' on", 45, 115);
 	    font.draw(raindropsGame.batch, "My Plants!", 45, 100);
 	    font.draw(raindropsGame.batch, "Press Spacebar", 26, 70);

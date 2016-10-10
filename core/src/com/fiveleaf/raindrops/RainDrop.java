@@ -21,7 +21,7 @@ public class RainDrop {
 	public RainDrop(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		rainDropImage = new Texture(Gdx.files.internal("assets/Raindrops_Rain.png"));
+		rainDropImage = new Texture(Gdx.files.internal("assets/NewSprite/rain.png"));
 		raindropsRactangle = new Array<Rectangle>();
 	}
 	
@@ -31,8 +31,8 @@ public class RainDrop {
 	    Rectangle raindrop = new Rectangle();
 	    raindrop.x = MathUtils.random(-8, 24) + randomPosition;
 	    raindrop.y = 144;
-	    raindrop.width = 8;
-	    raindrop.height = 8;
+	    raindrop.width = 10;
+	    raindrop.height = 15;
 	    raindropsRactangle.add(raindrop);
 	 }
 	public void draw(){

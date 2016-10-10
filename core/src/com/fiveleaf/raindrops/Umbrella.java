@@ -16,7 +16,7 @@ public class Umbrella {
 	public Umbrella(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		umbrellaImage = new Texture(Gdx.files.internal("assets/Raindrops_Umbrella.png"));
+		umbrellaImage = new Texture(Gdx.files.internal("assets/NewSprite/umbrella.png"));
 		
 		umbrellaRactangle = new Rectangle();
 	    umbrellaRactangle.x = (160 / 2) - (32 / 2);

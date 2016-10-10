@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -22,6 +23,8 @@ public class GameScreen extends ScreenAdapter{
 	private Music raindropsMusic;
 	
 	public SpriteBatch batch;
+	private Texture bg;
+	
 	private RaindropsGame raindropsGame;
 	private RainDrop rainDrop;
 	public Umbrella umbrella;
@@ -61,6 +64,8 @@ public class GameScreen extends ScreenAdapter{
 		this.raindropsGame = raindropsGame;
 		this.batch = raindropsGame.batch;
 		startTime = TimeUtils.millis();
+		
+		bg = new Texture(Gdx.files.internal("assets/NewSprite/desaturatedBG.png"));
 		fertilizer = new Fertilizer(this.raindropsGame, this);
 		rainDrop = new RainDrop(this.raindropsGame, this);
 		umbrella = new Umbrella(this.raindropsGame, this);
@@ -99,6 +104,7 @@ public class GameScreen extends ScreenAdapter{
 	    
 	    batch.setProjectionMatrix(camera.combined);
 	    batch.begin();
+	    batch.draw(bg, 0, 0);
 	    umbrella.draw();
 	    rainDrop.draw();
 	    cacti.draw();

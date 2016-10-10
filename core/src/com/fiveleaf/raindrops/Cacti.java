@@ -22,6 +22,7 @@ public class Cacti {
 	
 	public Array<Rectangle> cactiRectangle;
 	private Texture cactusImage;
+	private Texture cactusDeadImage;
 	private BitmapFont font;
 	
 	public int cactusStatus[];
@@ -38,7 +39,8 @@ public class Cacti {
 	public Cacti(RaindropsGame raindropsGame, GameScreen gameScreen){
 		this.raindropsGame = raindropsGame;
 		this.gameScreen = gameScreen;
-		cactusImage = new Texture(Gdx.files.internal("assets/Raindrops_Cactus.png"));
+		cactusImage = new Texture(Gdx.files.internal("assets/NewSprite/cac.png"));
+		cactusDeadImage = new Texture(Gdx.files.internal("assets/NewSprite/cacdead.png"));
 		cactiRectangle = new Array<Rectangle>();
 		font = new BitmapFont(Gdx.files.internal("assets/GameBoy_S10.fnt"));
 		font.setColor(15, 56, 15, 1);
@@ -74,24 +76,24 @@ public class Cacti {
 	private void placeCacti() {
 	    Rectangle cactus = new Rectangle();
 	    
-	    cactus.x = (160 / 2) - (52 + 16);
+	    cactus.x = (160 / 2) - (52 + 16) + 6;
 	    cactus.y = STARTING_Y;
-	    cactus.width = 32;
-	    cactus.height = 32;
+	    cactus.width = 20;
+	    cactus.height = 30;
 	    cactiRectangle.add(cactus);
 	    
 	    cactus = new Rectangle();
-	    cactus.x = (160 / 2) - (32 / 2);
+	    cactus.x = (160 / 2) - (32 / 2) + 6;
 	    cactus.y = STARTING_Y;
-	    cactus.width = 32;
-	    cactus.height = 32;
+	    cactus.width = 20;
+	    cactus.height = 30;
 	    cactiRectangle.add(cactus);
 	    
 	    cactus = new Rectangle();
-	    cactus.x = (160 / 2) + (52 - 16);
+	    cactus.x = (160 / 2) + (52 - 16) + 6;
 	    cactus.y = STARTING_Y;
-	    cactus.width = 32;
-	    cactus.height = 32;
+	    cactus.width = 20;
+	    cactus.height = 30;
 	    cactiRectangle.add(cactus);       
 	 }
 	
@@ -120,6 +122,7 @@ public class Cacti {
 				}
 				else {
 					printSpawnTime(counter);
+					gameScreen.batch.draw(cactusDeadImage, (int)cactus.x, (int)cactus.y + 200);
 				}
 				
 			}
@@ -192,7 +195,8 @@ public class Cacti {
 	
 	private void printSpawnTime(int target){
 		font.setColor(15, 56, 15, 1);
-		font.draw(gameScreen.batch, "" + ((spawnTime -  (TimeUtils.millis() - lastDeadTime[counter]))/1000 + 1 ), cactiRectangle.get(target).x + 16, cactiRectangle.get(target).y + 200 + 16);
+		font.draw(gameScreen.batch, "" + ((spawnTime -  (TimeUtils.millis() - lastDeadTime[counter]))/1000 + 1 ), cactiRectangle.get(target).x + 7, cactiRectangle.get(target).y + 200 + 22);
+		
 	}
 	
 	/*public void setNeedRain(int target, int value){
