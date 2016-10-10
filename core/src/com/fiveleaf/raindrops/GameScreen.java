@@ -35,6 +35,7 @@ public class GameScreen extends ScreenAdapter{
 	private WaterLevel water;
 	private HeartText heartText;
 	private FertBar fertBar;
+	private RainDropLastFrame rainDropLastFrame;
 	
 	private long lastDropTime;
 	private long lastMoveTime;
@@ -75,6 +76,7 @@ public class GameScreen extends ScreenAdapter{
 	    water = new WaterLevel(this.raindropsGame, this);
 	    heartText = new HeartText(this.raindropsGame, this);
 	    fertBar  = new FertBar(umbrella, this);
+	    rainDropLastFrame = new RainDropLastFrame(this.raindropsGame, this);
 	    
 	    rainToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusRainHit.wav"));
 	    fertToCactiSound = Gdx.audio.newSound(Gdx.files.internal("assets/CactusFertHit.wav"));
@@ -109,6 +111,7 @@ public class GameScreen extends ScreenAdapter{
 	    rainDrop.draw();
 	    cacti.draw();
 	    water.draw();
+	    rainDropLastFrame.draw();
 	    fertilizer.draw();
 	    cactiHealthBar.draw();
 	    scoreText.draw();
@@ -184,6 +187,7 @@ public class GameScreen extends ScreenAdapter{
 	            //rainToUmbrellaSound.play();
 	            iterRaindrop.remove();
 	            cactiCounter = cactiCounter - 1;
+	            rainDropLastFrame.addNewRDLF(raindrop.x, raindrop.y);
 	            addScore(SCORE_UMBRELLA);
 	        }
 	        else {
@@ -195,6 +199,7 @@ public class GameScreen extends ScreenAdapter{
 	                	rainToCactiSound.play(rainToCactiSoundVolume);
 	                    iterRaindrop.remove();
 	                    cacti.rainHit(cactiCounter);
+	                    rainDropLastFrame.addNewRDLF(raindrop.x, raindrop.y);
 	                    break;
 	                }
 	                cactiCounter++;
